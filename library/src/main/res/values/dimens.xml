@@ -17,8 +17,8 @@
 
 
 
-    <dimen name="photo_grid_padding_horizontal">2dp</dimen>
-    <dimen name="photo_grid_padding_vertical">2dp</dimen>
+    <dimen name="photo_grid_padding_horizontal">5dp</dimen>
+    <dimen name="photo_grid_padding_vertical">5dp</dimen>
 
     <dimen name="photo_grid_column_spacing">2dp</dimen>
     <dimen name="photo_grid_row_spacing">2dp</dimen>

@@ -8,11 +8,28 @@ import kotlinx.android.synthetic.main.photo_picker_photo_item.view.*
 
 class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration): RecyclerView.ViewHolder(view) {
 
-    fun bind(photo: PhotoAsset) {
+    private val thumbnailView = view.thumbnailView
 
+    private var pixelSize = 0
 
+        set(value) {
 
-        configuration.loadImage(itemView.thumbnailView, photo.path, 50, 50)
+            if (field == value) {
+                return
+            }
+
+            field = value
+
+            thumbnailView.layoutParams.width = value
+            thumbnailView.layoutParams.height = value
+
+        }
+
+    fun bind(photo: PhotoAsset, size: Int, pixelSize: Int) {
+
+        this.pixelSize = pixelSize
+
+        configuration.loadImage(itemView.thumbnailView, photo.path, size, size)
 
     }
 
