@@ -1,14 +1,10 @@
 package com.github.herokotlin.photopicker.view
 
 import android.content.Context
-import android.graphics.Rect
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
@@ -32,9 +28,9 @@ class AlbumList : LinearLayout {
             adapter.notifyDataSetChanged()
         }
 
-    lateinit var configuration: PhotoPickerConfiguration
+    private lateinit var configuration: PhotoPickerConfiguration
 
-    private val adapter = AlbumListAdapter()
+    private lateinit var adapter: AlbumListAdapter
 
     private val posterWidth: Int by lazy {
         resources.getDimension(R.dimen.album_poster_width).toInt()
@@ -61,6 +57,16 @@ class AlbumList : LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.photo_picker_album_list, this)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
+
+
+
+    }
+
+    fun init(configuration: PhotoPickerConfiguration) {
+
+        this.configuration = configuration
+
+        adapter = AlbumListAdapter()
 
         recyclerView.adapter = adapter
 

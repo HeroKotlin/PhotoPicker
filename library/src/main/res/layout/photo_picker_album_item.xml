@@ -5,7 +5,8 @@
               android:layout_height="wrap_content"
               android:paddingLeft="@dimen/album_padding_horizontal"
               android:paddingRight="@dimen/album_padding_horizontal"
-              android:background="@drawable/photo_picker_album_item">
+              android:background="@drawable/photo_picker_album_item"
+              android:clickable="true">
 
     <View
         android:id="@+id/separatorView"

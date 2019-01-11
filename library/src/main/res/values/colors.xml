@@ -3,7 +3,7 @@
 
     <color name="album_bg_color_normal">#FFF</color>
 
-    <color name="album_bg_color_pressed">#CCC</color>
+    <color name="album_bg_color_pressed">#F0F0F0</color>
 
     <color name="album_separator_color">#99CCCCCC</color>
 
