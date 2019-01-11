@@ -6,14 +6,14 @@ import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.FrameLayout
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 
 import com.github.herokotlin.photopicker.R
 import com.github.herokotlin.photopicker.model.AlbumAsset
 import kotlinx.android.synthetic.main.photo_picker_album_list.view.*
 
-class AlbumList : LinearLayout {
+class AlbumList : FrameLayout {
 
     var albumList = listOf<AlbumAsset>()
 
@@ -57,8 +57,6 @@ class AlbumList : LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.photo_picker_album_list, this)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-
-
 
     }
 

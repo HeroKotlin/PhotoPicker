@@ -8,26 +8,34 @@ import kotlinx.android.synthetic.main.photo_picker_album_item.view.*
 
 class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration): RecyclerView.ViewHolder(view) {
 
-    var index = -1
+    private val separatorView = view.separatorView
+
+    private val posterView = view.posterView
+
+    private val titleView = view.titleView
+
+    private val countView = view.countView
+
+    private var index = -1
 
     fun bind(index: Int, album: AlbumAsset, posterWidth: Int, posterHeight: Int) {
 
+        titleView.text = album.title
+        countView.text = "${album.photoList.count()}"
+
+        configuration.loadImage(posterView, album.poster.path, posterWidth, posterHeight)
+
         if (index == 0) {
             if (this.index > 0) {
-                itemView.separatorView.visibility = View.GONE
+                separatorView.visibility = View.GONE
             }
         }
         else {
             if (this.index <= 0) {
-                itemView.separatorView.visibility = View.VISIBLE
+                separatorView.visibility = View.VISIBLE
             }
         }
         this.index = index
-
-        itemView.titleView.text = album.title
-        itemView.countView.text = "${album.photoList.count()}"
-
-        configuration.loadImage(itemView.posterView, album.poster.path, posterWidth, posterHeight)
 
     }
 
