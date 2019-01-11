@@ -4,6 +4,8 @@
     <dimen name="album_padding_horizontal">12dp</dimen>
     <dimen name="album_padding_vertical">6dp</dimen>
 
+    <dimen name="album_separator_thickness">1px</dimen>
+
     <dimen name="album_poster_width">50dp</dimen>
     <dimen name="album_poster_height">50dp</dimen>
 

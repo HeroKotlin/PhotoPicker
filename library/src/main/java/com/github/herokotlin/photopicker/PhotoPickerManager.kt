@@ -1,6 +1,10 @@
 package com.github.herokotlin.photopicker
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
+import android.os.Process
 import android.provider.MediaStore
 import com.github.herokotlin.photopicker.model.AlbumAsset
 import com.github.herokotlin.photopicker.model.PhotoAsset
@@ -8,13 +12,30 @@ import java.io.File
 
 object PhotoPickerManager {
 
+    var onScanComplete: (() -> Unit)? = null
+
     private var allPhotos = mutableListOf<PhotoAsset>()
 
     private val allAlbums = HashMap<String, MutableList<PhotoAsset>>()
 
-    fun setup(context: Context) {
+    private val handler = object: Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message?) {
+            super.handleMessage(msg)
+            onScanComplete?.invoke()
+        }
+    }
+
+    private var scanTask: Thread? = null
+
+    fun scan(context: Context) {
 
         Thread(Runnable {
+
+            // 降低线程优先级
+//            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
+//
+//            // 存储当前线程，方便停止
+//            scanTask = Thread.currentThread()
 
             val imageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             val contentProvider = context.contentResolver
@@ -57,6 +78,9 @@ object PhotoPickerManager {
             }
 
             cursor.close()
+
+            // 回到主线程
+            handler.sendEmptyMessage(0)
 
         }).start()
 

@@ -2,12 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:paddingTop="@dimen/album_padding_vertical"
-              android:paddingBottom="@dimen/album_padding_vertical"
+              android:layout_height="wrap_content"
               android:paddingLeft="@dimen/album_padding_horizontal"
               android:paddingRight="@dimen/album_padding_horizontal"
               android:background="@drawable/photo_picker_album_item">
+
+    <View
+        android:id="@+id/separatorView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/album_separator_thickness"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/album_separator_color"
+    />
 
     <ImageView
         android:id="@+id/posterView"
@@ -15,6 +22,8 @@
         android:layout_height="@dimen/album_poster_height"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/album_padding_vertical"
+        android:layout_marginBottom="@dimen/album_padding_vertical"
         android:scaleType="centerCrop"
     />
 
