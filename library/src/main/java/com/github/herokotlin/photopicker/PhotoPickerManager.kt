@@ -32,10 +32,10 @@ object PhotoPickerManager {
         Thread(Runnable {
 
             // 降低线程优先级
-//            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
-//
-//            // 存储当前线程，方便停止
-//            scanTask = Thread.currentThread()
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
+
+            // 存储当前线程，方便停止
+            scanTask = Thread.currentThread()
 
             val imageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             val contentProvider = context.contentResolver
@@ -62,7 +62,7 @@ object PhotoPickerManager {
                 val name = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME))
                 val time = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED))
 
-                val photo = PhotoAsset(path, name, time)
+                val photo = PhotoAsset.build(path, name, time)
 
                 allPhotos.add(photo)
 

@@ -32,6 +32,8 @@ class PhotoGrid: FrameLayout {
 
         }
 
+    var selectedPhotoList = mutableListOf<PhotoAsset>()
+
     private lateinit var configuration: PhotoPickerConfiguration
 
     private var adapter: PhotoGridAdapter? = null
@@ -116,6 +118,64 @@ class PhotoGrid: FrameLayout {
 
     }
 
+    private fun toggleChecked(photo: PhotoAsset) {
+
+        // checked 获取反选值
+        val checked = photo.order < 0
+        val selectedCount = selectedPhotoList.count()
+
+        if (checked) {
+
+            // 因为有动画，用户可能在动画过程中快速点击了新的照片
+            // 这里应该忽略
+            if (selectedCount == configuration.maxSelectCount) {
+                return
+            }
+
+            photo.order = selectedCount
+            selectedPhotoList.add(photo)
+
+            var size = selectedPhotoList.count()
+            // 到达最大值，就无法再选了
+            if (selectedCount + 1 == configuration.maxSelectCount) {
+                adapter?.notifyDataSetChanged()
+            }
+            else {
+                adapter?.notifyItemChanged(photo.index)
+            }
+
+        }
+        else {
+
+            selectedPhotoList.removeAt(photo.order)
+            photo.order = -1
+
+            val changes = mutableListOf<Int>()
+
+            changes.add(photo.index)
+
+            // 重排顺序
+            selectedPhotoList.forEachIndexed { index, photoAsset ->
+                if (index != photoAsset.order) {
+                    photoAsset.order = index
+                    changes.add(photoAsset.index)
+                }
+            }
+
+            // 上个状态是到达上限
+            if (selectedCount == configuration.maxSelectCount) {
+                adapter?.notifyDataSetChanged()
+            }
+            else {
+                changes.forEach {
+                    adapter?.notifyItemChanged(it)
+                }
+            }
+
+        }
+
+    }
+
     inner class PhotoGridAdapter : RecyclerView.Adapter<PhotoItem>() {
 
         override fun getItemCount(): Int {
@@ -123,13 +183,28 @@ class PhotoGrid: FrameLayout {
         }
 
         override fun onBindViewHolder(holder: PhotoItem, position: Int) {
+
             val photo = photoList[position]
+
+            photo.index = position
+
+            // 选中状态下可以反选
+            if (photo.order >= 0) {
+                photo.selectable = true
+            }
+            else {
+                photo.selectable = selectedPhotoList.count() < configuration.maxSelectCount
+            }
+
             holder.bind(photo, cellSize, cellPixelSize)
+
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItem {
             val view = LayoutInflater.from(context).inflate(R.layout.photo_picker_photo_item, null)
-            return PhotoItem(view, configuration)
+            return PhotoItem(view, configuration) {
+                toggleChecked(it)
+            }
         }
 
     }

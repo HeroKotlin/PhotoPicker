@@ -11,4 +11,8 @@
 
     <color name="album_count_text_color">#99999999</color>
 
+    <color name="select_button_title_text_color">#FFF</color>
+
+    <color name="photo_overlay_color">#99FFFFFF</color>
+
 </resources>
