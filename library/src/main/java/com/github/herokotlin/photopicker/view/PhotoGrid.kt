@@ -28,13 +28,13 @@ class PhotoGrid: FrameLayout {
 
             field = value
 
-            adapter.notifyDataSetChanged()
+            adapter?.notifyDataSetChanged()
 
         }
 
     private lateinit var configuration: PhotoPickerConfiguration
 
-    private lateinit var adapter: PhotoGridAdapter
+    private var adapter: PhotoGridAdapter? = null
 
     private var cellSize = 0
 
@@ -99,8 +99,7 @@ class PhotoGrid: FrameLayout {
         // paddingHorizontal、paddingVertical、rowSpacing、columnSpacing 占用的是单元格的空间
 
         val columnCount = configuration.photoGirdSpanCount
-        val spacing = columnSpacing * (columnCount - 1)
-
+        val spacing = columnSpacing * (columnCount - 1) - paddingHorizontal * 2
 
         val cellPixelSize = Math.max((measuredWidth - spacing) / columnCount, 0)
 
@@ -109,8 +108,8 @@ class PhotoGrid: FrameLayout {
             this.cellSize = (cellPixelSize / resources.displayMetrics.density).toInt()
             this.cellPixelSize = cellPixelSize
 
-            if (cellPixelSize > 0 && adapter != null) {
-                adapter.notifyDataSetChanged()
+            if (cellPixelSize > 0) {
+                adapter?.notifyDataSetChanged()
             }
 
         }
