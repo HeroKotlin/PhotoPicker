@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="album_bg_color_normal">#FFF</color>
+
+    <color name="album_bg_color_pressed">#F0F0F0</color>
+
+    <color name="album_title_text_color">#000</color>
+
+    <color name="album_count_text_color">#99CCCCCC</color>
+
+</resources>

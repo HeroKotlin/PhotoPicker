@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingTop="@dimen/album_padding_vertical"
+              android:paddingBottom="@dimen/album_padding_vertical"
+              android:paddingLeft="@dimen/album_padding_horizontal"
+              android:paddingRight="@dimen/album_padding_horizontal"
+              android:background="@drawable/photo_picker_album_item">
+
+    <ImageView
+        android:id="@+id/posterView"
+        android:layout_width="@dimen/album_poster_width"
+        android:layout_height="@dimen/album_poster_height"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+    />
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/posterView"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/album_title_margin_left"
+        android:gravity="left"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/album_title_text_size"
+        android:textColor="@color/album_title_text_color"
+        tools:text="所有照片"
+    />
+
+    <TextView
+        android:id="@+id/countView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/titleView"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/album_count_margin_left"
+        android:gravity="left"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/album_count_text_size"
+        android:textColor="@color/album_count_text_color"
+        tools:text="50"
+    />
+
+    <ImageView
+        android:id="@+id/indicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/photo_picker_album_indicator"
+    />
+
+</RelativeLayout>
