@@ -1,6 +1,7 @@
 package com.github.herokotlin.photopicker
 
 import android.content.Context
+import android.provider.MediaStore
 import android.widget.ImageView
 
 abstract class PhotoPickerConfiguration(val context: Context) {
@@ -25,9 +26,24 @@ abstract class PhotoPickerConfiguration(val context: Context) {
      */
     var countable = true
 
+    var photoSortField = MediaStore.Images.Media.DATE_ADDED
+
+    var photoSortAscending = false
+
+    var photoMimeTypes = arrayOf("image/jpeg", "image/png", "image/gif", "image/webp")
+
+    var allPhotosAlbumTitle = "所有照片"
+
     /**
      * 加载图片
      */
     abstract fun loadImage(imageView: ImageView, url: String, width: Int, height: Int)
+
+    /**
+     * 过滤相册
+     */
+    open fun filterAlbum(title: String, count: Int): Boolean {
+        return true
+    }
 
 }

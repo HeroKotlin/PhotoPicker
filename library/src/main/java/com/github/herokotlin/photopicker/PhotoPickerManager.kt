@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import com.github.herokotlin.photopicker.model.AlbumAsset
 import com.github.herokotlin.photopicker.model.PhotoAsset
 import java.io.File
+import java.util.*
 
 object PhotoPickerManager {
 
@@ -27,7 +28,7 @@ object PhotoPickerManager {
 
     private var scanTask: Thread? = null
 
-    fun scan(context: Context) {
+    fun scan(context: Context, configuration: PhotoPickerConfiguration) {
 
         Thread(Runnable {
 
@@ -42,15 +43,10 @@ object PhotoPickerManager {
 
             val cursor = contentProvider.query(
                 imageUri,
-                arrayOf(
-                    MediaStore.Images.Media.DATA,
-                    MediaStore.Images.Media.DISPLAY_NAME,
-                    MediaStore.Images.Media.DATE_ADDED,
-                    MediaStore.Images.Media._ID
-                ),
                 null,
-                null,
-                MediaStore.Images.Media.DATE_ADDED
+                configuration.photoMimeTypes.map { "${MediaStore.Images.Media.MIME_TYPE}=?" }.joinToString(" or "),
+                configuration.photoMimeTypes,
+                configuration.photoSortField
             )
 
             allAlbums.clear()
@@ -77,6 +73,14 @@ object PhotoPickerManager {
 
             }
 
+
+            if (!configuration.photoSortAscending) {
+                allPhotos.reverse()
+                allAlbums.values.forEach {
+                    it.reverse()
+                }
+            }
+
             cursor.close()
 
             // 回到主线程
@@ -86,11 +90,11 @@ object PhotoPickerManager {
 
     }
 
-    fun fetchAlbumList(): List<AlbumAsset> {
+    fun fetchAlbumList(configuration: PhotoPickerConfiguration): List<AlbumAsset> {
 
         val result = mutableListOf<AlbumAsset>()
 
-        result.add(AlbumAsset("所有照片", allPhotos[0], allPhotos))
+        result.add(AlbumAsset(configuration.allPhotosAlbumTitle, allPhotos[0], allPhotos))
 
         allAlbums.keys.forEach { title ->
             allAlbums[title]?.let {
@@ -101,7 +105,7 @@ object PhotoPickerManager {
             }
         }
 
-        return result
+        return result.filter { configuration.filterAlbum(it.title, it.photoList.count()) }
 
     }
 
