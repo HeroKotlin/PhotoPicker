@@ -43,6 +43,12 @@ abstract class PhotoPickerConfiguration(val context: Context) {
      * 过滤相册
      */
     open fun filterAlbum(title: String, count: Int): Boolean {
+        if (count == 0) {
+            return false
+        }
+        if (title.startsWith("drawable-")) {
+            return false
+        }
         return true
     }
 

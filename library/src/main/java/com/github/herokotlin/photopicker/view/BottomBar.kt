@@ -41,12 +41,12 @@ class BottomBar: RelativeLayout {
 
             if (value > 0) {
                 submitButton.isEnabled = true
-                submitButton.alpha = 1.toFloat()
+                submitButton.alpha = 1f
                 submitButton.text = "$submitButtonTitle($selectedCount)"
             }
             else {
                 submitButton.isEnabled = false
-                submitButton.alpha = 0.5.toFloat()
+                submitButton.alpha = 0.5f
                 submitButton.text = submitButtonTitle
             }
 

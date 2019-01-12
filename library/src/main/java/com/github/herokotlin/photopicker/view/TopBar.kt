@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.github.herokotlin.photopicker.R
-import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
 
 class TopBar: RelativeLayout {
 
@@ -24,8 +23,6 @@ class TopBar: RelativeLayout {
     private fun init() {
 
         LayoutInflater.from(context).inflate(R.layout.photo_picker_top_bar, this)
-
-
 
     }
 
