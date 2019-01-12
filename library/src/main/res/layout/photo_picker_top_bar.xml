@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/photo_picker_top_bar_height"
+                android:paddingLeft="@dimen/photo_picker_top_bar_padding_horizontal"
+                android:paddingRight="@dimen/photo_picker_top_bar_padding_horizontal"
+                android:background="@drawable/photo_picker_top_bar">
+
+    <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="@dimen/photo_picker_cancel_button_width"
+            android:layout_height="@dimen/photo_picker_cancel_button_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/photo_picker_cancel_button_title"
+            android:textSize="@dimen/photo_picker_cancel_button_title_text_size"
+            android:textColor="@color/photo_picker_cancel_button_title_text_color"
+            android:padding="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    <com.github.herokotlin.photopicker.view.TitleButton
+            android:id="@+id/titleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

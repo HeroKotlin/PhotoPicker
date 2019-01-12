@@ -36,9 +36,10 @@
         android:gravity="left"
         android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="200dp"
         android:textSize="@dimen/photo_picker_album_title_text_size"
         android:textColor="@color/photo_picker_album_title_text_color"
-        tools:text="所有照片"/>
+        tools:text="所有照片所有照片所有照片所有照片所有照片"/>
 
     <TextView
         android:id="@+id/countView"

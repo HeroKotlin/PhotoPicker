@@ -5,7 +5,6 @@ import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -96,9 +95,6 @@ class PhotoGrid: FrameLayout {
     }
 
     private fun updateCellSize() {
-
-        // GridLayoutManager 会水平均分
-        // paddingHorizontal、paddingVertical、rowSpacing、columnSpacing 占用的是单元格的空间
 
         val columnCount = configuration.photoGirdSpanCount
         val spacing = columnSpacing * (columnCount - 1) - paddingHorizontal * 2

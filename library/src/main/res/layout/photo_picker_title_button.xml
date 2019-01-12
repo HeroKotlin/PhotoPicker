@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingTop="@dimen/photo_picker_title_button_padding_vertical"
+              android:paddingBottom="@dimen/photo_picker_title_button_padding_vertical"
+              android:paddingLeft="@dimen/photo_picker_title_button_padding_horizontal"
+              android:paddingRight="@dimen/photo_picker_title_button_padding_horizontal">
+
+    <TextView
+            android:id="@+id/titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:maxWidth="150dp"
+            android:textSize="@dimen/photo_picker_title_button_title_text_size"
+            android:textColor="@color/photo_picker_title_button_title_text_color"
+            tools:text="所有照片所有照片所有照片所有照片"/>
+
+    <ImageView
+            android:id="@+id/arrowView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/photo_picker_title_button_title_margin_right"
+            android:src="@drawable/photo_picker_arrow"/>
+
+</LinearLayout>
