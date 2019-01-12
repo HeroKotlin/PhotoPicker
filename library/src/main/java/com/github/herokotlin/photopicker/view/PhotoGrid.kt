@@ -43,19 +43,19 @@ class PhotoGrid: FrameLayout {
     private var cellPixelSize = 0
 
     private val paddingHorizontal: Int by lazy {
-        resources.getDimensionPixelSize(R.dimen.photo_grid_padding_horizontal)
+        resources.getDimensionPixelSize(R.dimen.photo_picker_photo_grid_padding_horizontal)
     }
 
     private val paddingVertical: Int by lazy {
-        resources.getDimensionPixelSize(R.dimen.photo_grid_padding_vertical)
+        resources.getDimensionPixelSize(R.dimen.photo_picker_photo_grid_padding_vertical)
     }
 
     private val rowSpacing: Int by lazy {
-        resources.getDimensionPixelSize(R.dimen.photo_grid_row_spacing)
+        resources.getDimensionPixelSize(R.dimen.photo_picker_photo_grid_row_spacing)
     }
 
     private val columnSpacing: Int by lazy {
-        resources.getDimensionPixelSize(R.dimen.photo_grid_column_spacing)
+        resources.getDimensionPixelSize(R.dimen.photo_picker_photo_grid_column_spacing)
     }
 
     constructor(context: Context) : super(context) {

@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="album_bg_color_normal">#FFF</color>
+    <color name="photo_picker_album_bg_color_normal">#FFF</color>
 
-    <color name="album_bg_color_pressed">#F0F0F0</color>
+    <color name="photo_picker_album_bg_color_pressed">#F0F0F0</color>
 
-    <color name="album_separator_color">#99CCCCCC</color>
+    <color name="photo_picker_album_separator_color">#99CCCCCC</color>
 
-    <color name="album_title_text_color">#000</color>
+    <color name="photo_picker_album_title_text_color">#000</color>
 
-    <color name="album_count_text_color">#99999999</color>
+    <color name="photo_picker_album_count_text_color">#99999999</color>
 
-    <color name="select_button_title_text_color">#FFF</color>
+    <color name="photo_picker_select_button_title_text_color">#FFF</color>
 
-    <color name="photo_overlay_color">#99FFFFFF</color>
+    <color name="photo_picker_photo_overlay_color">#99FFFFFF</color>
+
+    <color name="photo_picker_bottom_bar_bg_color">#262C32</color>
+
+    <color name="photo_picker_raw_button_title_text_color">#FFF</color>
+
+    <color name="photo_picker_submit_button_bg_color_normal">#199917</color>
+    <color name="photo_picker_submit_button_bg_color_pressed">#157715</color>
+    <color name="photo_picker_submit_button_title_text_color">#FFF</color>
 
 </resources>

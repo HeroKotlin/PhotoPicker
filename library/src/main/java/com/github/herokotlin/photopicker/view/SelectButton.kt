@@ -78,5 +78,4 @@ class SelectButton: RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.photo_picker_select_button, this)
     }
 
-
 }

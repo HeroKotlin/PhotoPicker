@@ -17,14 +17,14 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/thumbnailView"
             android:layout_alignBottom="@id/thumbnailView"
-            android:layout_marginBottom="@dimen/photo_badge_margin_bottom"
-            android:layout_marginRight="@dimen/photo_badge_margin_right"
+            android:layout_marginBottom="@dimen/photo_picker_photo_badge_margin_bottom"
+            android:layout_marginRight="@dimen/photo_picker_photo_badge_margin_right"
             android:src="@drawable/photo_picker_badge_live"/>
 
     <com.github.herokotlin.photopicker.view.SelectButton
             android:id="@+id/selectButton"
-            android:layout_width="@dimen/select_button_width"
-            android:layout_height="@dimen/select_button_height"
+            android:layout_width="@dimen/photo_picker_select_button_width"
+            android:layout_height="@dimen/photo_picker_select_button_height"
             android:layout_alignRight="@id/thumbnailView"
             android:layout_alignTop="@id/thumbnailView"/>
 
@@ -36,7 +36,7 @@
             android:layout_alignBottom="@id/thumbnailView"
             android:layout_alignLeft="@id/thumbnailView"
             android:layout_alignRight="@id/thumbnailView"
-            android:background="@color/photo_overlay_color"/>
+            android:background="@color/photo_picker_photo_overlay_color"/>
 
 
 </RelativeLayout>

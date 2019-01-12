@@ -3,30 +3,28 @@
                 xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:paddingLeft="@dimen/album_padding_horizontal"
-              android:paddingRight="@dimen/album_padding_horizontal"
+              android:paddingLeft="@dimen/photo_picker_album_padding_horizontal"
+              android:paddingRight="@dimen/photo_picker_album_padding_horizontal"
               android:background="@drawable/photo_picker_album_item"
               android:clickable="true">
 
     <View
         android:id="@+id/separatorView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/album_separator_thickness"
+        android:layout_height="@dimen/photo_picker_album_separator_thickness"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:background="@color/album_separator_color"
-    />
+        android:background="@color/photo_picker_album_separator_color"/>
 
     <ImageView
         android:id="@+id/posterView"
-        android:layout_width="@dimen/album_poster_width"
-        android:layout_height="@dimen/album_poster_height"
+        android:layout_width="@dimen/photo_picker_album_poster_width"
+        android:layout_height="@dimen/photo_picker_album_poster_height"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/album_padding_vertical"
-        android:layout_marginBottom="@dimen/album_padding_vertical"
-        android:scaleType="centerCrop"
-    />
+        android:layout_marginTop="@dimen/photo_picker_album_padding_vertical"
+        android:layout_marginBottom="@dimen/photo_picker_album_padding_vertical"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/titleView"
@@ -34,14 +32,13 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/posterView"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/album_title_margin_left"
+        android:layout_marginLeft="@dimen/photo_picker_album_title_margin_left"
         android:gravity="left"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textSize="@dimen/album_title_text_size"
-        android:textColor="@color/album_title_text_color"
-        tools:text="所有照片"
-    />
+        android:textSize="@dimen/photo_picker_album_title_text_size"
+        android:textColor="@color/photo_picker_album_title_text_color"
+        tools:text="所有照片"/>
 
     <TextView
         android:id="@+id/countView"
@@ -49,14 +46,13 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/titleView"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/album_count_margin_left"
+        android:layout_marginLeft="@dimen/photo_picker_album_count_margin_left"
         android:gravity="left"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textSize="@dimen/album_count_text_size"
-        android:textColor="@color/album_count_text_color"
-        tools:text="50"
-    />
+        android:textSize="@dimen/photo_picker_album_count_text_size"
+        android:textColor="@color/photo_picker_album_count_text_color"
+        tools:text="50"/>
 
     <ImageView
         android:id="@+id/indicatorView"
@@ -64,7 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/photo_picker_album_indicator"
-    />
+        android:src="@drawable/photo_picker_album_indicator"/>
 
 </RelativeLayout>

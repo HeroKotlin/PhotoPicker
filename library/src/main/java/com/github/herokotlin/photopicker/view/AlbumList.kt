@@ -33,11 +33,11 @@ class AlbumList : FrameLayout {
     private lateinit var adapter: AlbumListAdapter
 
     private val posterWidth: Int by lazy {
-        resources.getDimension(R.dimen.album_poster_width).toInt()
+        resources.getDimension(R.dimen.photo_picker_album_poster_width).toInt()
     }
 
     private val posterHeight: Int by lazy {
-        resources.getDimension(R.dimen.album_poster_height).toInt()
+        resources.getDimension(R.dimen.photo_picker_album_poster_height).toInt()
     }
 
     constructor(context: Context) : super(context) {

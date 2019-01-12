@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
        android:shape="rectangle">
 
-    <solid android:color="@color/album_bg_color_normal" />
+    <solid android:color="@color/photo_picker_album_bg_color_normal" />
 
 </shape>
