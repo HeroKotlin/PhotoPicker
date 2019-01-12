@@ -70,10 +70,20 @@ class PhotoPickerActivity: AppCompatActivity() {
 
 
         photoGridView.init(configuration)
+        photoGridView.onSelectedPhotoListChange = {
+            bottomBar.selectedCount = photoGridView.selectedPhotoList.count()
+        }
+
+        albumListView.init(configuration)
+        albumListView.onAlbumClick = {
+            currentAlbum = it
+            toggleAlbumList()
+        }
 
         PhotoPickerManager.onScanComplete = {
             val albumList = PhotoPickerManager.fetchAlbumList(configuration)
-            currentAlbum = albumList[0]
+            albumListView.albumList = albumList
+            currentAlbum = if (albumList.count() > 0) albumList[0] else null
         }
         PhotoPickerManager.scan(this, configuration)
 
@@ -85,7 +95,6 @@ class PhotoPickerActivity: AppCompatActivity() {
             toggleAlbumList()
         }
 
-
     }
 
     private fun toggleAlbumList() {
@@ -93,7 +102,10 @@ class PhotoPickerActivity: AppCompatActivity() {
         val checked = !topBar.titleButton.checked
 
         if (checked) {
-
+            albumListView.visibility = View.VISIBLE
+        }
+        else {
+            albumListView.visibility = View.GONE
         }
 
         topBar.titleButton.checked = checked

@@ -17,6 +17,10 @@ import kotlinx.android.synthetic.main.photo_picker_photo_grid.view.*
 
 class PhotoGrid: FrameLayout {
 
+    var onPhotoClick: ((PhotoAsset) -> Unit)? = null
+
+    var onSelectedPhotoListChange: (() -> Unit)? = null
+
     var photoList = listOf<PhotoAsset>()
 
         set(value) {
@@ -25,7 +29,21 @@ class PhotoGrid: FrameLayout {
                 return
             }
 
+            // 安卓和 ios 的实现机制不一样
+            // 安卓会持续持有照片实例
+            // 因此当来回切换时，照片的选中状态还在，这里要重置一下
+            value.forEach {
+                if (it.order >= 0) {
+                    it.order = -1
+                }
+            }
+
             field = value
+
+            if (selectedPhotoList.count() > 0) {
+                selectedPhotoList.clear()
+                onSelectedPhotoListChange?.invoke()
+            }
 
             adapter?.notifyDataSetChanged()
 
@@ -130,8 +148,8 @@ class PhotoGrid: FrameLayout {
 
             photo.order = selectedCount
             selectedPhotoList.add(photo)
+            onSelectedPhotoListChange?.invoke()
 
-            var size = selectedPhotoList.count()
             // 到达最大值，就无法再选了
             if (selectedCount + 1 == configuration.maxSelectCount) {
                 adapter?.notifyDataSetChanged()
@@ -144,6 +162,8 @@ class PhotoGrid: FrameLayout {
         else {
 
             selectedPhotoList.removeAt(photo.order)
+            onSelectedPhotoListChange?.invoke()
+
             photo.order = -1
 
             val changes = mutableListOf<Int>()
@@ -198,9 +218,16 @@ class PhotoGrid: FrameLayout {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItem {
             val view = LayoutInflater.from(context).inflate(R.layout.photo_picker_photo_item, null)
-            return PhotoItem(view, configuration) {
-                toggleChecked(it)
-            }
+            return PhotoItem(
+                view,
+                configuration,
+                {
+                    onPhotoClick?.invoke(it)
+                },
+                {
+                    toggleChecked(it)
+                }
+            )
         }
 
     }

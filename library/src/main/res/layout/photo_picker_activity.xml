@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.github.herokotlin.photopicker.view.TopBar
-            android:id="@+id/topBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
     <com.github.herokotlin.photopicker.view.PhotoGrid
             android:id="@+id/photoGridView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topBar"
+            android:layout_above="@+id/bottomBar"/>
 
     <com.github.herokotlin.photopicker.view.BottomBar
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"/>
 
-</LinearLayout>
+    <com.github.herokotlin.photopicker.view.AlbumList
+            android:id="@+id/albumListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topBar"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"/>
+
+    <com.github.herokotlin.photopicker.view.TopBar
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"/>
+
+</RelativeLayout>

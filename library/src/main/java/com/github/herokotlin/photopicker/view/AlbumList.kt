@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.photo_picker_album_list.view.*
 
 class AlbumList : FrameLayout {
 
+    var onAlbumClick: ((AlbumAsset) -> Unit)? = null
+
     var albumList = listOf<AlbumAsset>()
 
         set(value) {
@@ -82,7 +84,9 @@ class AlbumList : FrameLayout {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumItem {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.photo_picker_album_item, parent, false)
-            return AlbumItem(view, configuration)
+            return AlbumItem(view, configuration) {
+                onAlbumClick?.invoke(it)
+            }
         }
 
     }

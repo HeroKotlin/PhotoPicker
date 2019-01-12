@@ -8,7 +8,7 @@ import com.github.herokotlin.photopicker.model.AssetType
 import com.github.herokotlin.photopicker.model.PhotoAsset
 import kotlinx.android.synthetic.main.photo_picker_photo_item.view.*
 
-class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration, private val onToggleChecked: ((PhotoAsset) -> Unit)): RecyclerView.ViewHolder(view) {
+class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((PhotoAsset) -> Unit), private val onToggleChecked: ((PhotoAsset) -> Unit)): RecyclerView.ViewHolder(view) {
 
     private val thumbnailView = view.thumbnailView
 
@@ -65,10 +65,17 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
 
     init {
         selectButton.countable = configuration.countable
+
         selectButton.setOnClickListener {
             // overlayView 如果是透明色，点击会穿透
             if (selectable) {
                 onToggleChecked.invoke(photo)
+            }
+        }
+
+        view.setOnClickListener {
+            if (selectable) {
+                onClick.invoke(photo)
             }
         }
     }

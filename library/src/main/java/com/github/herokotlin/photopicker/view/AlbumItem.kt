@@ -6,7 +6,7 @@ import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.model.AlbumAsset
 import kotlinx.android.synthetic.main.photo_picker_album_item.view.*
 
-class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration): RecyclerView.ViewHolder(view) {
+class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((AlbumAsset) -> Unit)): RecyclerView.ViewHolder(view) {
 
     private val separatorView = view.separatorView
 
@@ -17,6 +17,14 @@ class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration)
     private val countView = view.countView
 
     private var index = -1
+
+    private lateinit var album: AlbumAsset
+
+    init {
+        view.setOnClickListener {
+            onClick.invoke(album)
+        }
+    }
 
     fun bind(index: Int, album: AlbumAsset, posterWidth: Int, posterHeight: Int) {
 
@@ -35,7 +43,9 @@ class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration)
                 separatorView.visibility = View.VISIBLE
             }
         }
+
         this.index = index
+        this.album = album
 
     }
 
