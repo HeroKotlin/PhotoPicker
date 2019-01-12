@@ -67,8 +67,7 @@ object PhotoPickerManager {
                     if (!allAlbums.contains(albumName)) {
                         allAlbums[albumName] = mutableListOf()
                     }
-                    val photoList = allAlbums[albumName]
-                    photoList?.add(photo)
+                    allAlbums[albumName]?.add(photo)
                 }
 
             }
@@ -94,19 +93,28 @@ object PhotoPickerManager {
 
         val result = mutableListOf<AlbumAsset>()
 
-        result.add(AlbumAsset(configuration.allPhotosAlbumTitle, allPhotos[0], allPhotos))
+        result.add(
+            AlbumAsset.build(configuration.allPhotosAlbumTitle, allPhotos)
+        )
 
         allAlbums.keys.forEach { title ->
             allAlbums[title]?.let {
                 val list = it.toList()
                 result.add(
-                    AlbumAsset(title, list[0], list)
+                    AlbumAsset.build(title, list)
                 )
             }
         }
 
         return result.filter { configuration.filterAlbum(it.title, it.photoList.count()) }
 
+    }
+
+    fun fetchPhotoList(album: String): List<PhotoAsset> {
+        if (allAlbums.contains(album)) {
+            return allAlbums[album]!!
+        }
+        return allPhotos
     }
 
     private fun getAlbumName(path: String): String {
