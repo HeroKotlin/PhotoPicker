@@ -1,10 +1,8 @@
 package com.github.herokotlin.photopicker
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
-import android.os.Process
+import android.content.pm.PackageManager
+import android.os.*
 import android.provider.MediaStore
 import com.github.herokotlin.photopicker.model.AlbumAsset
 import com.github.herokotlin.photopicker.model.PhotoAsset
@@ -13,7 +11,19 @@ import java.util.*
 
 object PhotoPickerManager {
 
-    var onScanComplete: (() -> Unit)? = null
+    private const val PERMISSION_REQUEST_CODE = 12321
+
+    var onPermissionsGranted: (() -> Unit)? = null
+
+    var onPermissionsDenied: (() -> Unit)? = null
+
+    var onFetchWithoutPermissions: (() -> Unit)? = null
+
+    var onFetchWithoutExternalStorage: (() -> Unit)? = null
+
+    private lateinit var onRequestPermissionsComplete: () -> Unit
+
+    private lateinit var onScanComplete: () -> Unit
 
     private var allPhotos = mutableListOf<PhotoAsset>()
 
@@ -22,13 +32,15 @@ object PhotoPickerManager {
     private val handler = object: Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
-            onScanComplete?.invoke()
+            onScanComplete.invoke()
         }
     }
 
     private var scanTask: Thread? = null
 
-    fun scan(context: Context, configuration: PhotoPickerConfiguration) {
+    fun scan(context: Context, configuration: PhotoPickerConfiguration, callback: () -> Unit) {
+
+        onScanComplete = callback
 
         Thread(Runnable {
 
@@ -115,6 +127,45 @@ object PhotoPickerManager {
             return allAlbums[album]!!
         }
         return allPhotos
+    }
+
+    fun requestPermissions(configuration: PhotoPickerConfiguration, callback: () -> Unit) {
+
+        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
+            onFetchWithoutExternalStorage?.invoke()
+            return
+        }
+
+        onRequestPermissionsComplete = callback
+
+        if (configuration.requestPermissions(
+                listOf(
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ),
+                PERMISSION_REQUEST_CODE
+            )
+        ) {
+            callback()
+        }
+
+    }
+
+    fun requestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+        if (requestCode != PERMISSION_REQUEST_CODE) {
+            return
+        }
+
+        for (i in 0 until permissions.size) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                onPermissionsDenied?.invoke()
+                return
+            }
+        }
+
+        onPermissionsGranted?.invoke()
+        onRequestPermissionsComplete.invoke()
+
     }
 
     private fun getAlbumName(path: String): String {

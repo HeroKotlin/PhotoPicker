@@ -3,22 +3,25 @@ package com.github.herokotlin.photopicker
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import com.github.herokotlin.photopicker.model.AlbumAsset
+import com.github.herokotlin.photopicker.model.AssetType
 import com.github.herokotlin.photopicker.model.PhotoAsset
+import com.github.herokotlin.photopicker.model.PickedAsset
 import kotlinx.android.synthetic.main.photo_picker_activity.*
 import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
 import kotlinx.android.synthetic.main.photo_picker_title_button.view.*
 import kotlinx.android.synthetic.main.photo_picker_top_bar.view.*
+import java.io.File
 
 class PhotoPickerActivity: AppCompatActivity() {
 
@@ -26,11 +29,13 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         lateinit var configuration: PhotoPickerConfiguration
 
-        const val RESULT_CODE_PHOTO_LIST = 1001
-
-        fun newInstance(context: Context) {
+        fun newInstance(context: Activity, requestCode: Int) {
             val intent = Intent(context, PhotoPickerActivity::class.java)
-            context.startActivity(intent)
+            context.startActivityForResult(intent, requestCode)
+        }
+
+        fun obtainResult(data: Intent): ArrayList<PickedAsset> {
+            return data.getParcelableArrayListExtra<PickedAsset>("photoList")
         }
 
     }
@@ -95,12 +100,25 @@ class PhotoPickerActivity: AppCompatActivity() {
             toggleAlbumList()
         }
 
-        PhotoPickerManager.onScanComplete = {
-            val albumList = PhotoPickerManager.fetchAlbumList(configuration)
-            albumListView.albumList = albumList
-            currentAlbum = if (albumList.count() > 0) albumList[0] else null
+        PhotoPickerManager.onPermissionsGranted = {
+
         }
-        PhotoPickerManager.scan(this, configuration)
+        PhotoPickerManager.onPermissionsDenied = {
+
+        }
+        PhotoPickerManager.onFetchWithoutPermissions = {
+
+        }
+        PhotoPickerManager.onFetchWithoutExternalStorage = {
+
+        }
+        PhotoPickerManager.requestPermissions(configuration) {
+            PhotoPickerManager.scan(this, configuration) {
+                val albumList = PhotoPickerManager.fetchAlbumList(configuration)
+                albumListView.albumList = albumList
+                currentAlbum = if (albumList.count() > 0) albumList[0] else null
+            }
+        }
 
         topBar.cancelButton.setOnClickListener {
             cancel()
@@ -202,24 +220,47 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         val intent = Intent()
 
-        val result = mutableListOf<PhotoAsset>()
+        val selectedList = mutableListOf<PhotoAsset>()
 
         photoGridView.selectedPhotoList.forEach {
-            result.add(it)
+            selectedList.add(it)
         }
 
         // 不计数就用照片原来的顺序
         if (!configuration.countable) {
-            result.sortBy { it.index }
+            selectedList.sortBy { it.index }
         }
 
-        if (!bottomBar.isRawChecked) {
-            result.map { configuration.compressPhoto(it) }
+        // 排序完成之后，转成 PickedAsset
+
+        val cacheDir = externalCacheDir
+        val isRawChecked = bottomBar.isRawChecked
+
+        val result = ArrayList<PickedAsset>()
+
+        selectedList.forEach {
+
+            // 先把原图转存一份
+            // 避免调用者拿到原图乱改，比如改名字啥的，对用户其实不太好
+
+            val src = File(it.path)
+            val path = cacheDir.absolutePath + File.separator + src.name
+            val dest = File(path)
+            src.copyTo(dest, true)
+
+            var asset = PickedAsset(path, it.width, it.height, dest.length(), it.type == AssetType.VIDEO)
+
+            if (!isRawChecked) {
+                asset = configuration.compressPhoto(asset)
+            }
+
+            result.add(asset)
+
         }
 
+        intent.putParcelableArrayListExtra("photoList", result)
 
-//        intent.putExtra("photoList", listOf<PhotoAsset>())
-        setResult(RESULT_CODE_PHOTO_LIST, intent)
+        setResult(Activity.RESULT_OK, intent)
 
         finish()
 

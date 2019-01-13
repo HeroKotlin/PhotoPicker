@@ -3,6 +3,7 @@ package com.github.herokotlin.photopicker
 import android.provider.MediaStore
 import android.widget.ImageView
 import com.github.herokotlin.photopicker.model.PhotoAsset
+import com.github.herokotlin.photopicker.model.PickedAsset
 
 abstract class PhotoPickerConfiguration {
 
@@ -40,6 +41,11 @@ abstract class PhotoPickerConfiguration {
     var titleButtonArrowAnimationDuration = 200L
 
     /**
+     * 请求权限
+     */
+    abstract fun requestPermissions(permissions: List<String>, requestCode: Int): Boolean
+
+    /**
      * 加载图片
      */
     abstract fun loadPhoto(imageView: ImageView, url: String, width: Int, height: Int)
@@ -47,9 +53,7 @@ abstract class PhotoPickerConfiguration {
     /**
      * 未选择原图模式时的压缩
      */
-    open fun compressPhoto(photo: PhotoAsset): PhotoAsset {
-        return photo
-    }
+    abstract fun compressPhoto(asset: PickedAsset): PickedAsset
 
     /**
      * 过滤相册
