@@ -4,16 +4,16 @@ import android.webkit.MimeTypeMap
 
 data class PhotoAsset(
     val path: String,
-    var name: String,
-    var time: Long,
-    var type: AssetType,
+    val width: Int,
+    val height: Int,
+    val type: AssetType,
     var index: Int = -1,
     var order: Int = -1,
     var selectable: Boolean = true
 ) {
     companion object {
 
-        fun build(path: String, name: String, time: Long): PhotoAsset {
+        fun build(path: String, width: Int, height: Int): PhotoAsset {
 
             var type = AssetType.IMAGE
 
@@ -42,7 +42,7 @@ data class PhotoAsset(
                 }
             }
 
-            return PhotoAsset(path, name, time, type)
+            return PhotoAsset(path, width, height, type)
 
         }
 

@@ -86,7 +86,7 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
         this.photo = photo
         this.pixelSize = pixelSize
 
-        configuration.loadImage(itemView.thumbnailView, photo.path, size, size)
+        configuration.loadPhoto(itemView.thumbnailView, photo.path, size, size)
 
         val drawable = when (photo.type) {
             AssetType.GIF -> {

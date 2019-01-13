@@ -1,10 +1,10 @@
 package com.github.herokotlin.photopicker
 
-import android.content.Context
 import android.provider.MediaStore
 import android.widget.ImageView
+import com.github.herokotlin.photopicker.model.PhotoAsset
 
-abstract class PhotoPickerConfiguration(val context: Context) {
+abstract class PhotoPickerConfiguration {
 
     /**
      * 照片网格每行多少个
@@ -42,7 +42,14 @@ abstract class PhotoPickerConfiguration(val context: Context) {
     /**
      * 加载图片
      */
-    abstract fun loadImage(imageView: ImageView, url: String, width: Int, height: Int)
+    abstract fun loadPhoto(imageView: ImageView, url: String, width: Int, height: Int)
+
+    /**
+     * 未选择原图模式时的压缩
+     */
+    open fun compressPhoto(photo: PhotoAsset): PhotoAsset {
+        return photo
+    }
 
     /**
      * 过滤相册

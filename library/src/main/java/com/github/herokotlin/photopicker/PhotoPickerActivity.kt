@@ -16,6 +16,7 @@ import android.view.animation.RotateAnimation
 import com.github.herokotlin.photopicker.model.AlbumAsset
 import com.github.herokotlin.photopicker.model.PhotoAsset
 import kotlinx.android.synthetic.main.photo_picker_activity.*
+import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
 import kotlinx.android.synthetic.main.photo_picker_title_button.view.*
 import kotlinx.android.synthetic.main.photo_picker_top_bar.view.*
 
@@ -24,6 +25,8 @@ class PhotoPickerActivity: AppCompatActivity() {
     companion object {
 
         lateinit var configuration: PhotoPickerConfiguration
+
+        const val RESULT_CODE_PHOTO_LIST = 1001
 
         fun newInstance(context: Context) {
             val intent = Intent(context, PhotoPickerActivity::class.java)
@@ -100,11 +103,15 @@ class PhotoPickerActivity: AppCompatActivity() {
         PhotoPickerManager.scan(this, configuration)
 
         topBar.cancelButton.setOnClickListener {
-            finish()
+            cancel()
         }
 
         topBar.titleButton.setOnClickListener {
             toggleAlbumList()
+        }
+
+        bottomBar.submitButton.setOnClickListener {
+            submit()
         }
 
     }
@@ -184,6 +191,37 @@ class PhotoPickerActivity: AppCompatActivity() {
 
 
         albumListVisible = visible
+
+    }
+
+    private fun cancel() {
+        finish()
+    }
+
+    private fun submit() {
+
+        val intent = Intent()
+
+        val result = mutableListOf<PhotoAsset>()
+
+        photoGridView.selectedPhotoList.forEach {
+            result.add(it)
+        }
+
+        // 不计数就用照片原来的顺序
+        if (!configuration.countable) {
+            result.sortBy { it.index }
+        }
+
+        if (!bottomBar.isRawChecked) {
+            result.map { configuration.compressPhoto(it) }
+        }
+
+
+//        intent.putExtra("photoList", listOf<PhotoAsset>())
+        setResult(RESULT_CODE_PHOTO_LIST, intent)
+
+        finish()
 
     }
 

@@ -31,7 +31,7 @@ class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration,
         titleView.text = album.title
         countView.text = "${album.photoList.count()}"
 
-        configuration.loadImage(posterView, album.poster.path, posterWidth, posterHeight)
+        configuration.loadPhoto(posterView, album.poster.path, posterWidth, posterHeight)
 
         if (index == 0) {
             if (this.index > 0) {

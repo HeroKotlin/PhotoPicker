@@ -22,6 +22,8 @@
             android:textSize="@dimen/photo_picker_submit_button_title_text_size"
             android:textColor="@color/photo_picker_submit_button_title_text_color"
             android:text="@string/photo_picker_submit_button_title"
+            android:enabled="false"
+            android:alpha="0.5"
             android:padding="0dp"
             android:minWidth="0dp"
             android:minHeight="0dp"

@@ -1,9 +1,9 @@
 package com.github.herokotlin.photopicker.model
 
 data class AlbumAsset(
-    var title: String,
-    var poster: PhotoAsset,
-    var photoList: List<PhotoAsset>
+    val title: String,
+    val poster: PhotoAsset,
+    val photoList: List<PhotoAsset>
 ) {
     companion object {
 

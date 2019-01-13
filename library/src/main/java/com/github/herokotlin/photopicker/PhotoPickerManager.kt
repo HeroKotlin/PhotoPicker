@@ -55,10 +55,10 @@ object PhotoPickerManager {
             while (cursor.moveToNext()) {
 
                 val path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA))
-                val name = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME))
-                val time = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED))
+                val width = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.WIDTH))
+                val height = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.HEIGHT))
 
-                val photo = PhotoAsset.build(path, name, time)
+                val photo = PhotoAsset.build(path, width, height)
 
                 allPhotos.add(photo)
 
