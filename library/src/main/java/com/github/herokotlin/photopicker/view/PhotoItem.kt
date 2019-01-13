@@ -66,8 +66,9 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
     init {
         selectButton.countable = configuration.countable
 
+        // overlayView 如果是透明色，点击会穿透
         selectButton.setOnClickListener {
-            // overlayView 如果是透明色，点击会穿透
+
             if (selectable) {
                 onToggleChecked.invoke(photo)
             }
