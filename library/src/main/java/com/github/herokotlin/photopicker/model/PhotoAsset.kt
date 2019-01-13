@@ -6,6 +6,7 @@ data class PhotoAsset(
     val path: String,
     val width: Int,
     val height: Int,
+    val size: Int,
     val type: AssetType,
     var index: Int = -1,
     var order: Int = -1,
@@ -13,7 +14,7 @@ data class PhotoAsset(
 ) {
     companion object {
 
-        fun build(path: String, width: Int, height: Int): PhotoAsset {
+        fun build(path: String, width: Int, height: Int, size: Int): PhotoAsset {
 
             var type = AssetType.IMAGE
 
@@ -42,7 +43,7 @@ data class PhotoAsset(
                 }
             }
 
-            return PhotoAsset(path, width, height, type)
+            return PhotoAsset(path, width, height, size, type)
 
         }
 

@@ -8,7 +8,7 @@ data class PickedAsset(
     val path: String,
     val width: Int,
     val height: Int,
-    val size: Long,
+    val size: Int,
     val isVideo: Boolean,
     val isRaw: Boolean
 ): Parcelable

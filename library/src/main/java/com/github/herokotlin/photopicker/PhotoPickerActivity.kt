@@ -226,7 +226,7 @@ class PhotoPickerActivity: AppCompatActivity() {
         // 排序完成之后，转成 PickedAsset
 
         val result = selectedList.map {
-            PickedAsset(it.path, it.width, it.height, File(it.path).length(), it.type == AssetType.VIDEO, bottomBar.isRawChecked)
+            PickedAsset(it.path, it.width, it.height, it.size, it.type == AssetType.VIDEO, bottomBar.isRawChecked)
         }
 
         callback.onSubmit(this, result)
