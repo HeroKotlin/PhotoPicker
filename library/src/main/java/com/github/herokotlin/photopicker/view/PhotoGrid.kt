@@ -29,18 +29,15 @@ class PhotoGrid: FrameLayout {
                 return
             }
 
-            // 安卓和 ios 的实现机制不一样
-            // 安卓会持续持有照片实例
-            // 因此当来回切换时，照片的选中状态还在，这里要重置一下
-            value.forEach {
-                if (it.order >= 0) {
-                    it.order = -1
-                }
-            }
-
             field = value
 
             if (selectedPhotoList.count() > 0) {
+                // 安卓和 ios 的实现机制不一样
+                // 安卓会持续持有照片实例
+                // 因此当来回切换时，照片的选中状态还在，这里要重置一下
+                selectedPhotoList.forEach {
+                    it.order = -1
+                }
                 selectedPhotoList.clear()
                 onSelectedPhotoListChange?.invoke()
             }
@@ -117,7 +114,7 @@ class PhotoGrid: FrameLayout {
         val columnCount = configuration.photoGirdSpanCount
         val spacing = columnSpacing * (columnCount - 1) - paddingHorizontal * 2
 
-        val cellPixelSize = Math.max((measuredWidth - spacing) / columnCount, 0)
+        val cellPixelSize = Math.max((width - spacing) / columnCount, 0)
 
         if (cellPixelSize != this.cellPixelSize) {
 

@@ -1,14 +1,22 @@
 package com.github.herokotlin.photopicker
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import com.github.herokotlin.photopicker.model.AlbumAsset
 import com.github.herokotlin.photopicker.model.PhotoAsset
 import kotlinx.android.synthetic.main.photo_picker_activity.*
+import kotlinx.android.synthetic.main.photo_picker_title_button.view.*
 import kotlinx.android.synthetic.main.photo_picker_top_bar.view.*
 
 class PhotoPickerActivity: AppCompatActivity() {
@@ -25,7 +33,7 @@ class PhotoPickerActivity: AppCompatActivity() {
     }
 
     // 当前选中的相册
-    var currentAlbum: AlbumAsset? = null
+    private var currentAlbum: AlbumAsset? = null
 
         set(value) {
 
@@ -52,6 +60,10 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         }
 
+    private var albumListVisible = false
+
+    private var rotateAnimation: RotateAnimation? = null
+    private var translateAnimation: ValueAnimator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -99,16 +111,79 @@ class PhotoPickerActivity: AppCompatActivity() {
 
     private fun toggleAlbumList() {
 
-        val checked = !topBar.titleButton.checked
+        val visible = !albumListVisible
 
-        if (checked) {
+        val topBarBottom = topBar.y + topBar.height
+        val bottomBarBottom = bottomBar.y + bottomBar.height
+
+        val height = bottomBarBottom - (topBarBottom)
+        albumListView.layoutParams.height = height.toInt()
+
+        val fromY: Float
+        val toY: Float
+
+        val fromAngle: Float
+        val toAngle: Float
+
+        if (visible) {
             albumListView.visibility = View.VISIBLE
+            fromY = topBarBottom - height
+            toY = topBarBottom
+            fromAngle = 0f
+            toAngle = -180f
         }
         else {
-            albumListView.visibility = View.GONE
+            fromY = topBarBottom
+            toY = topBarBottom - height
+            fromAngle = -180f
+            toAngle = 0f
         }
 
-        topBar.titleButton.checked = checked
+        translateAnimation?.cancel()
+
+        val animator = ValueAnimator.ofFloat(fromY, toY)
+        animator.duration = configuration.titleButtonArrowAnimationDuration
+        animator.interpolator = LinearInterpolator()
+        animator.addUpdateListener {
+            albumListView.y = it.animatedValue as Float
+        }
+        animator.addListener(object: AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                translateAnimation = null
+                if (!visible) {
+                    albumListView.visibility = View.GONE
+                }
+            }
+        })
+        animator.start()
+
+        translateAnimation = animator
+
+
+
+        rotateAnimation?.cancel()
+
+        val animation = RotateAnimation(fromAngle, toAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        animation.duration = configuration.titleButtonArrowAnimationDuration
+        animation.repeatCount = 0
+        animation.fillAfter = true
+        animation.setAnimationListener(object: Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+            override fun onAnimationStart(animation: Animation?) {
+
+            }
+            override fun onAnimationEnd(animation: Animation?) {
+                rotateAnimation = null
+            }
+        })
+        topBar.titleButton.arrowView.startAnimation(animation)
+
+        rotateAnimation = animation
+
+
+        albumListVisible = visible
 
     }
 

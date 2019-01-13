@@ -35,6 +35,11 @@ abstract class PhotoPickerConfiguration(val context: Context) {
     var allPhotosAlbumTitle = "所有照片"
 
     /**
+     * 标题按钮箭头动画时长
+     */
+    var titleButtonArrowAnimationDuration = 200L
+
+    /**
      * 加载图片
      */
     abstract fun loadImage(imageView: ImageView, url: String, width: Int, height: Int)
