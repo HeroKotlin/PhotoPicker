@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -27,15 +26,13 @@ class PhotoPickerActivity: AppCompatActivity() {
 
     companion object {
 
+        lateinit var callback: PhotoPickerCallback
+
         lateinit var configuration: PhotoPickerConfiguration
 
         fun newInstance(context: Activity, requestCode: Int) {
             val intent = Intent(context, PhotoPickerActivity::class.java)
             context.startActivityForResult(intent, requestCode)
-        }
-
-        fun obtainResult(data: Intent): ArrayList<PickedAsset> {
-            return data.getParcelableArrayListExtra<PickedAsset>("photoList")
         }
 
     }
@@ -101,16 +98,16 @@ class PhotoPickerActivity: AppCompatActivity() {
         }
 
         PhotoPickerManager.onPermissionsGranted = {
-
+            callback.onPermissionsGranted(this)
         }
         PhotoPickerManager.onPermissionsDenied = {
-
+            callback.onPermissionsDenied(this)
         }
         PhotoPickerManager.onFetchWithoutPermissions = {
-
+            callback.onFetchWithoutPermissions(this)
         }
         PhotoPickerManager.onFetchWithoutExternalStorage = {
-
+            callback.onFetchWithoutExternalStorage(this)
         }
         PhotoPickerManager.requestPermissions(configuration) {
             PhotoPickerManager.scan(this, configuration) {
@@ -121,7 +118,7 @@ class PhotoPickerActivity: AppCompatActivity() {
         }
 
         topBar.cancelButton.setOnClickListener {
-            cancel()
+            callback.onCancel(this)
         }
 
         topBar.titleButton.setOnClickListener {
@@ -212,14 +209,9 @@ class PhotoPickerActivity: AppCompatActivity() {
 
     }
 
-    private fun cancel() {
-        finish()
-    }
-
     private fun submit() {
 
-        val intent = Intent()
-
+        // 先排序
         val selectedList = mutableListOf<PhotoAsset>()
 
         photoGridView.selectedPhotoList.forEach {
@@ -233,36 +225,11 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         // 排序完成之后，转成 PickedAsset
 
-        val cacheDir = externalCacheDir
-        val isRawChecked = bottomBar.isRawChecked
-
-        val result = ArrayList<PickedAsset>()
-
-        selectedList.forEach {
-
-            // 先把原图转存一份
-            // 避免调用者拿到原图乱改，比如改名字啥的，对用户其实不太好
-
-            val src = File(it.path)
-            val path = cacheDir.absolutePath + File.separator + src.name
-            val dest = File(path)
-            src.copyTo(dest, true)
-
-            var asset = PickedAsset(path, it.width, it.height, dest.length(), it.type == AssetType.VIDEO)
-
-            if (!isRawChecked) {
-                asset = configuration.compressPhoto(asset)
-            }
-
-            result.add(asset)
-
+        val result = selectedList.map {
+            PickedAsset(it.path, it.width, it.height, File(it.path).length(), it.type == AssetType.VIDEO, bottomBar.isRawChecked)
         }
 
-        intent.putParcelableArrayListExtra("photoList", result)
-
-        setResult(Activity.RESULT_OK, intent)
-
-        finish()
+        callback.onSubmit(this, result)
 
     }
 

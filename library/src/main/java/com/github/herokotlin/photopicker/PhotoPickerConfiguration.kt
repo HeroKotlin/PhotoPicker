@@ -51,11 +51,6 @@ abstract class PhotoPickerConfiguration {
     abstract fun loadPhoto(imageView: ImageView, url: String, width: Int, height: Int)
 
     /**
-     * 未选择原图模式时的压缩
-     */
-    abstract fun compressPhoto(asset: PickedAsset): PickedAsset
-
-    /**
      * 过滤相册
      */
     open fun filterAlbum(title: String, count: Int): Boolean {
