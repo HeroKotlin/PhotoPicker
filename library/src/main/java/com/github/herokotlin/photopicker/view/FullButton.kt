@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.github.herokotlin.photopicker.R
-import kotlinx.android.synthetic.main.photo_picker_raw_button.view.*
+import kotlinx.android.synthetic.main.photo_picker_full_button.view.*
 
-class RawButton: LinearLayout {
+class FullButton: LinearLayout {
 
     var image = 0
 
@@ -36,7 +36,7 @@ class RawButton: LinearLayout {
     }
 
     private fun init() {
-        LayoutInflater.from(context).inflate(R.layout.photo_picker_raw_button, this)
+        LayoutInflater.from(context).inflate(R.layout.photo_picker_full_button, this)
     }
 
 }

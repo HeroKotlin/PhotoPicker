@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
 
 class BottomBar: RelativeLayout {
 
-    var isRawChecked = false
+    var isFullChecked = false
 
         set(value) {
 
@@ -20,11 +20,11 @@ class BottomBar: RelativeLayout {
 
             field = value
 
-            rawButton.image = if (value) {
-                R.drawable.photo_picker_raw_button_checked
+            fullButton.image = if (value) {
+                R.drawable.photo_picker_full_button_checked
             }
             else {
-                R.drawable.photo_picker_raw_button_unchecked
+                R.drawable.photo_picker_full_button_unchecked
             }
 
         }
@@ -72,8 +72,8 @@ class BottomBar: RelativeLayout {
 
         LayoutInflater.from(context).inflate(R.layout.photo_picker_bottom_bar, this)
 
-        rawButton.setOnClickListener {
-            isRawChecked = !isRawChecked
+        fullButton.setOnClickListener {
+            isFullChecked = !isFullChecked
         }
 
     }

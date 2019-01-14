@@ -2,8 +2,6 @@ package com.github.herokotlin.photopicker
 
 import android.provider.MediaStore
 import android.widget.ImageView
-import com.github.herokotlin.photopicker.model.PhotoAsset
-import com.github.herokotlin.photopicker.model.PickedAsset
 
 abstract class PhotoPickerConfiguration {
 
