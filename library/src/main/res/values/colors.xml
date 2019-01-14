@@ -22,8 +22,8 @@
 
     <color name="photo_picker_full_button_title_text_color">#FFF</color>
 
-    <color name="photo_picker_submit_button_bg_color_normal">#199917</color>
-    <color name="photo_picker_submit_button_bg_color_pressed">#157715</color>
+    <color name="photo_picker_submit_button_bg_color_normal">#FF9C00</color>
+    <color name="photo_picker_submit_button_bg_color_pressed">#FF7A07</color>
     <color name="photo_picker_submit_button_title_text_color">#FFF</color>
 
     <color name="photo_picker_title_button_title_text_color">#666</color>
