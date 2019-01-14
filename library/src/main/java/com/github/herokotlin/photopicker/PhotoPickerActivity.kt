@@ -215,6 +215,8 @@ class PhotoPickerActivity: AppCompatActivity() {
         val selectedList = mutableListOf<PhotoAsset>()
 
         photoGridView.selectedPhotoList.forEach {
+            // 重置，避免下次打开 activity 还有选中状态
+            it.order = -1
             selectedList.add(it)
         }
 

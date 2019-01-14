@@ -73,6 +73,10 @@ object PhotoPickerManager {
 
                 val photo = PhotoAsset.build(path, width, height, size)
 
+                if (!configuration.filterPhoto(photo.width, photo.height, photo.type)) {
+                    continue
+                }
+
                 allPhotos.add(photo)
 
                 val albumName = getAlbumName(path)
@@ -84,7 +88,6 @@ object PhotoPickerManager {
                 }
 
             }
-
 
             if (!configuration.photoSortAscending) {
                 allPhotos.reverse()

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.model.AlbumAsset
+import com.github.herokotlin.photopicker.R
 import kotlinx.android.synthetic.main.photo_picker_album_item.view.*
 
 class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((AlbumAsset) -> Unit)): RecyclerView.ViewHolder(view) {
@@ -26,12 +27,18 @@ class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration,
         }
     }
 
-    fun bind(index: Int, album: AlbumAsset, posterWidth: Int, posterHeight: Int) {
+    fun bind(index: Int, album: AlbumAsset) {
 
         titleView.text = album.title
         countView.text = "${album.photoList.count()}"
 
-        configuration.loadPhoto(posterView, album.poster.path, posterWidth, posterHeight)
+        val poster = album.poster
+        if (poster != null) {
+            configuration.loadPhoto(posterView, poster.path, R.drawable.photo_picker_album_poster_loading_placeholder, R.drawable.photo_picker_album_poster_error_placeholder)
+        }
+        else {
+            posterView.setImageResource(R.drawable.photo_picker_album_empty_placeholder)
+        }
 
         if (index == 0) {
             if (this.index > 0) {

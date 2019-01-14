@@ -2,6 +2,7 @@ package com.github.herokotlin.photopicker
 
 import android.provider.MediaStore
 import android.widget.ImageView
+import com.github.herokotlin.photopicker.model.AssetType
 
 abstract class PhotoPickerConfiguration {
 
@@ -46,7 +47,7 @@ abstract class PhotoPickerConfiguration {
     /**
      * 加载图片
      */
-    abstract fun loadPhoto(imageView: ImageView, url: String, width: Int, height: Int)
+    abstract fun loadPhoto(imageView: ImageView, url: String, loadinngPlaceholder: Int, errorPlaceholder: Int)
 
     /**
      * 过滤相册
@@ -58,6 +59,13 @@ abstract class PhotoPickerConfiguration {
         if (title.startsWith("drawable-")) {
             return false
         }
+        return true
+    }
+
+    /**
+     * 过滤图片
+     */
+    open fun filterPhoto(width: Int, height: Int, type: AssetType): Boolean {
         return true
     }
 

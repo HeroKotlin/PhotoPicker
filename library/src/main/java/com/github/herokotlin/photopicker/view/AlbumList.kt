@@ -34,14 +34,6 @@ class AlbumList : FrameLayout {
 
     private lateinit var adapter: AlbumListAdapter
 
-    private val posterWidth: Int by lazy {
-        resources.getDimension(R.dimen.photo_picker_album_poster_width).toInt()
-    }
-
-    private val posterHeight: Int by lazy {
-        resources.getDimension(R.dimen.photo_picker_album_poster_height).toInt()
-    }
-
     constructor(context: Context) : super(context) {
         init()
     }
@@ -79,7 +71,7 @@ class AlbumList : FrameLayout {
         }
 
         override fun onBindViewHolder(holder: AlbumItem, position: Int) {
-            holder.bind(position, albumList[position], posterWidth, posterHeight)
+            holder.bind(position, albumList[position])
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumItem {

@@ -209,7 +209,7 @@ class PhotoGrid: FrameLayout {
                 photo.selectable = selectedPhotoList.count() < configuration.maxSelectCount
             }
 
-            holder.bind(photo, cellSize, cellPixelSize)
+            holder.bind(photo, cellPixelSize)
 
         }
 

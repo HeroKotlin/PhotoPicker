@@ -81,12 +81,12 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
         }
     }
 
-    fun bind(photo: PhotoAsset, size: Int, pixelSize: Int) {
+    fun bind(photo: PhotoAsset, pixelSize: Int) {
 
         this.photo = photo
         this.pixelSize = pixelSize
 
-        configuration.loadPhoto(itemView.thumbnailView, photo.path, size, size)
+        configuration.loadPhoto(itemView.thumbnailView, photo.path, R.drawable.photo_picker_photo_thumbnail_loading_placeholder, R.drawable.photo_picker_photo_thumbnail_error_placeholder)
 
         val drawable = when (photo.type) {
             AssetType.GIF -> {
