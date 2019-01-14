@@ -28,6 +28,7 @@ class AlbumList : FrameLayout {
             field = value
 
             adapter.notifyDataSetChanged()
+
         }
 
     private lateinit var configuration: PhotoPickerConfiguration

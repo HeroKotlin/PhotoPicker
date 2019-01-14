@@ -17,11 +17,6 @@ abstract class PhotoPickerConfiguration {
     var maxSelectCount = 9
 
     /**
-     * 是否支持多选
-     */
-    var selectable = true
-
-    /**
      * 是否支持计数
      */
     var countable = true

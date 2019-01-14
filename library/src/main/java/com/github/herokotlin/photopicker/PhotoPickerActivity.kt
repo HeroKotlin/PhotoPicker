@@ -125,6 +125,7 @@ class PhotoPickerActivity: AppCompatActivity() {
             toggleAlbumList()
         }
 
+        bottomBar.configuration = configuration
         bottomBar.submitButton.setOnClickListener {
             submit()
         }

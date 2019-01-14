@@ -68,7 +68,6 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
 
         // overlayView 如果是透明色，点击会穿透
         selectButton.setOnClickListener {
-
             if (selectable) {
                 onToggleChecked.invoke(photo)
             }
@@ -108,10 +107,8 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
             badgeView.visibility = View.GONE
         }
 
-        if (configuration.selectable) {
-            checked = photo.order >= 0
-            selectable = photo.selectable
-        }
+        checked = photo.order >= 0
+        selectable = photo.selectable
 
     }
 

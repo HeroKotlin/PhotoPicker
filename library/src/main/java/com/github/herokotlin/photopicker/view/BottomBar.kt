@@ -1,14 +1,16 @@
 package com.github.herokotlin.photopicker.view
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
+import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.R
 import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
 
 class BottomBar: RelativeLayout {
+
+    lateinit var configuration: PhotoPickerConfiguration
 
     var isFullChecked = false
 
@@ -39,17 +41,20 @@ class BottomBar: RelativeLayout {
 
             field = value
 
+            var title = submitButtonTitle
             if (value > 0) {
                 submitButton.isEnabled = true
                 submitButton.alpha = 1f
-                submitButton.text = "$submitButtonTitle($selectedCount)"
+                if (configuration.maxSelectCount > 1) {
+                    title = "$submitButtonTitle($selectedCount)"
+                }
             }
             else {
                 submitButton.isEnabled = false
                 submitButton.alpha = 0.5f
-                submitButton.text = submitButtonTitle
             }
 
+            submitButton.text = title
         }
 
     private val submitButtonTitle: String by lazy {
