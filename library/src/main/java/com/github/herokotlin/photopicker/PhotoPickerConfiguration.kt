@@ -30,11 +30,6 @@ abstract class PhotoPickerConfiguration {
     var allPhotosAlbumTitle = "所有照片"
 
     /**
-     * 标题按钮箭头动画时长
-     */
-    var titleButtonArrowAnimationDuration = 200L
-
-    /**
      * 请求权限
      */
     abstract fun requestPermissions(permissions: List<String>, requestCode: Int): Boolean
@@ -61,7 +56,7 @@ abstract class PhotoPickerConfiguration {
      * 过滤图片
      */
     open fun filterPhoto(width: Int, height: Int, type: AssetType): Boolean {
-        return true
+        return width > 44 && height > 44
     }
 
 }

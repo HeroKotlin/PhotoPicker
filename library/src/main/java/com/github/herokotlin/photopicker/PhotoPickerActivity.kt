@@ -165,7 +165,7 @@ class PhotoPickerActivity: AppCompatActivity() {
         translateAnimation?.cancel()
 
         val animator = ValueAnimator.ofFloat(fromY, toY)
-        animator.duration = configuration.titleButtonArrowAnimationDuration
+        animator.duration = 200
         animator.interpolator = LinearInterpolator()
         animator.addUpdateListener {
             albumListView.y = it.animatedValue as Float
@@ -187,7 +187,7 @@ class PhotoPickerActivity: AppCompatActivity() {
         rotateAnimation?.cancel()
 
         val animation = RotateAnimation(fromAngle, toAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        animation.duration = configuration.titleButtonArrowAnimationDuration
+        animation.duration = 200
         animation.repeatCount = 0
         animation.fillAfter = true
         animation.setAnimationListener(object: Animation.AnimationListener {
