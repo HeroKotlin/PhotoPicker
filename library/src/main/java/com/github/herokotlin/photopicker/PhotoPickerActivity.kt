@@ -60,7 +60,7 @@ class PhotoPickerActivity: AppCompatActivity() {
             }
 
             topBar.titleButton.title = title
-            photoGridView.assetList = assetList
+            assetGridView.assetList = assetList
 
         }
 
@@ -85,9 +85,9 @@ class PhotoPickerActivity: AppCompatActivity() {
         setContentView(R.layout.photo_picker_activity)
 
 
-        photoGridView.init(configuration)
-        photoGridView.onSelectedAssetListChange = {
-            bottomBar.selectedCount = photoGridView.selectedAssetList.count()
+        assetGridView.init(configuration)
+        assetGridView.onSelectedAssetListChange = {
+            bottomBar.selectedCount = assetGridView.selectedAssetList.count()
         }
 
         albumListView.init(configuration)
@@ -214,7 +214,7 @@ class PhotoPickerActivity: AppCompatActivity() {
         // 先排序
         val selectedList = mutableListOf<Asset>()
 
-        photoGridView.selectedAssetList.forEach {
+        assetGridView.selectedAssetList.forEach {
             // 重置，避免下次打开 activity 还有选中状态
             it.order = -1
             selectedList.add(it)

@@ -5,7 +5,7 @@
               android:layout_height="match_parent">
 
     <com.github.herokotlin.photopicker.view.AssetGrid
-            android:id="@+id/photoGridView"
+            android:id="@+id/assetGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/topBar"

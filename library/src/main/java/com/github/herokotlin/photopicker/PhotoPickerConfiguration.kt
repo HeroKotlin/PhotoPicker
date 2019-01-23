@@ -21,11 +21,11 @@ abstract class PhotoPickerConfiguration {
      */
     var countable = true
 
-    var photoSortField = MediaStore.Images.Media.DATE_ADDED
+    var assetSortField = MediaStore.Images.Media.DATE_ADDED
 
-    var photoSortAscending = false
+    var assetSortAscending = false
 
-    var photoMimeTypes = arrayOf("image/jpeg", "image/png", "image/gif", "image/webp")
+    var assetMimeTypes = arrayOf("image/jpeg", "image/png", "image/gif", "image/webp")
 
     var allPhotosAlbumTitle = "所有照片"
 
@@ -55,7 +55,7 @@ abstract class PhotoPickerConfiguration {
     /**
      * 过滤图片
      */
-    open fun filterPhoto(width: Int, height: Int, type: AssetType): Boolean {
+    open fun filterAsset(width: Int, height: Int, type: AssetType): Boolean {
         return width > 44 && height > 44
     }
 

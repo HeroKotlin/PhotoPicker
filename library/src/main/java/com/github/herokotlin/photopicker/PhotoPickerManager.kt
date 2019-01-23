@@ -56,9 +56,9 @@ object PhotoPickerManager {
             val cursor = contentProvider.query(
                 imageUri,
                 null,
-                configuration.photoMimeTypes.map { "${MediaStore.Images.Media.MIME_TYPE}=?" }.joinToString(" or "),
-                configuration.photoMimeTypes,
-                configuration.photoSortField
+                configuration.assetMimeTypes.map { "${MediaStore.Images.Media.MIME_TYPE}=?" }.joinToString(" or "),
+                configuration.assetMimeTypes,
+                configuration.assetSortField
             )
 
             allAlbums.clear()
@@ -73,7 +73,7 @@ object PhotoPickerManager {
 
                 val photo = Asset.build(path, width, height, size)
 
-                if (!configuration.filterPhoto(photo.width, photo.height, photo.type)) {
+                if (!configuration.filterAsset(photo.width, photo.height, photo.type)) {
                     continue
                 }
 
@@ -89,7 +89,7 @@ object PhotoPickerManager {
 
             }
 
-            if (!configuration.photoSortAscending) {
+            if (!configuration.assetSortAscending) {
                 allPhotos.reverse()
                 allAlbums.values.forEach {
                     it.reverse()
