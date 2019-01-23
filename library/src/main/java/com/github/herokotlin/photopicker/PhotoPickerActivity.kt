@@ -12,15 +12,14 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
-import com.github.herokotlin.photopicker.model.AlbumAsset
+import com.github.herokotlin.photopicker.model.Album
 import com.github.herokotlin.photopicker.model.AssetType
-import com.github.herokotlin.photopicker.model.PhotoAsset
+import com.github.herokotlin.photopicker.model.Asset
 import com.github.herokotlin.photopicker.model.PickedAsset
 import kotlinx.android.synthetic.main.photo_picker_activity.*
 import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
 import kotlinx.android.synthetic.main.photo_picker_title_button.view.*
 import kotlinx.android.synthetic.main.photo_picker_top_bar.view.*
-import java.io.File
 
 class PhotoPickerActivity: AppCompatActivity() {
 
@@ -38,7 +37,7 @@ class PhotoPickerActivity: AppCompatActivity() {
     }
 
     // 当前选中的相册
-    private var currentAlbum: AlbumAsset? = null
+    private var currentAlbum: Album? = null
 
         set(value) {
 
@@ -49,19 +48,19 @@ class PhotoPickerActivity: AppCompatActivity() {
             field = value
 
             val title: String
-            val photoList: List<PhotoAsset>
+            val assetList: List<Asset>
 
             if (value != null) {
                 title = value.title
-                photoList = PhotoPickerManager.fetchPhotoList(value.title)
+                assetList = PhotoPickerManager.fetchPhotoList(value.title)
             }
             else {
                 title = ""
-                photoList = listOf()
+                assetList = listOf()
             }
 
             topBar.titleButton.title = title
-            photoGridView.photoList = photoList
+            photoGridView.assetList = assetList
 
         }
 
@@ -87,8 +86,8 @@ class PhotoPickerActivity: AppCompatActivity() {
 
 
         photoGridView.init(configuration)
-        photoGridView.onSelectedPhotoListChange = {
-            bottomBar.selectedCount = photoGridView.selectedPhotoList.count()
+        photoGridView.onSelectedAssetListChange = {
+            bottomBar.selectedCount = photoGridView.selectedAssetList.count()
         }
 
         albumListView.init(configuration)
@@ -213,9 +212,9 @@ class PhotoPickerActivity: AppCompatActivity() {
     private fun submit() {
 
         // 先排序
-        val selectedList = mutableListOf<PhotoAsset>()
+        val selectedList = mutableListOf<Asset>()
 
-        photoGridView.selectedPhotoList.forEach {
+        photoGridView.selectedAssetList.forEach {
             // 重置，避免下次打开 activity 还有选中状态
             it.order = -1
             selectedList.add(it)

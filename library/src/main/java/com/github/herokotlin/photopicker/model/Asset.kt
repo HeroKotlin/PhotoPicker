@@ -2,7 +2,7 @@ package com.github.herokotlin.photopicker.model
 
 import android.webkit.MimeTypeMap
 
-data class PhotoAsset(
+data class Asset(
     val path: String,
     val width: Int,
     val height: Int,
@@ -14,7 +14,7 @@ data class PhotoAsset(
 ) {
     companion object {
 
-        fun build(path: String, width: Int, height: Int, size: Int): PhotoAsset {
+        fun build(path: String, width: Int, height: Int, size: Int): Asset {
 
             var type = AssetType.IMAGE
 
@@ -26,9 +26,6 @@ data class PhotoAsset(
                 when (parts[0]) {
                     "video" -> {
                         type = AssetType.VIDEO
-                    }
-                    "audio" -> {
-                        type = AssetType.AUDIO
                     }
                     "image" -> {
                         when (parts[1]) {
@@ -43,7 +40,7 @@ data class PhotoAsset(
                 }
             }
 
-            return PhotoAsset(path, width, height, size, type)
+            return Asset(path, width, height, size, type)
 
         }
 

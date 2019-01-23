@@ -3,11 +3,11 @@ package com.github.herokotlin.photopicker.view
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
-import com.github.herokotlin.photopicker.model.AlbumAsset
+import com.github.herokotlin.photopicker.model.Album
 import com.github.herokotlin.photopicker.R
 import kotlinx.android.synthetic.main.photo_picker_album_item.view.*
 
-class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((AlbumAsset) -> Unit)): RecyclerView.ViewHolder(view) {
+class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((Album) -> Unit)): RecyclerView.ViewHolder(view) {
 
     private val separatorView = view.separatorView
 
@@ -19,7 +19,7 @@ class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration,
 
     private var index = -1
 
-    private lateinit var album: AlbumAsset
+    private lateinit var album: Album
 
     init {
         view.setOnClickListener {
@@ -27,14 +27,14 @@ class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration,
         }
     }
 
-    fun bind(index: Int, album: AlbumAsset) {
+    fun bind(index: Int, album: Album) {
 
         titleView.text = album.title
-        countView.text = "${album.photoList.count()}"
+        countView.text = "${album.assetList.count()}"
 
         val poster = album.poster
         if (poster != null) {
-            configuration.loadPhoto(posterView, poster.path, R.drawable.photo_picker_album_poster_loading_placeholder, R.drawable.photo_picker_album_poster_error_placeholder)
+            configuration.loadAsset(posterView, poster.path, R.drawable.photo_picker_album_poster_loading_placeholder, R.drawable.photo_picker_album_poster_error_placeholder)
         }
         else {
             posterView.setImageResource(R.drawable.photo_picker_album_empty_placeholder)

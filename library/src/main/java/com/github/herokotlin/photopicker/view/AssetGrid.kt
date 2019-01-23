@@ -12,16 +12,16 @@ import android.widget.FrameLayout
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 
 import com.github.herokotlin.photopicker.R
-import com.github.herokotlin.photopicker.model.PhotoAsset
-import kotlinx.android.synthetic.main.photo_picker_photo_grid.view.*
+import com.github.herokotlin.photopicker.model.Asset
+import kotlinx.android.synthetic.main.photo_picker_asset_grid.view.*
 
-class PhotoGrid: FrameLayout {
+class AssetGrid: FrameLayout {
 
-    var onPhotoClick: ((PhotoAsset) -> Unit)? = null
+    var onAssetClick: ((Asset) -> Unit)? = null
 
-    var onSelectedPhotoListChange: (() -> Unit)? = null
+    var onSelectedAssetListChange: (() -> Unit)? = null
 
-    var photoList = listOf<PhotoAsset>()
+    var assetList = listOf<Asset>()
 
         set(value) {
 
@@ -31,22 +31,22 @@ class PhotoGrid: FrameLayout {
 
             field = value
 
-            if (selectedPhotoList.count() > 0) {
+            if (selectedAssetList.count() > 0) {
                 // 安卓和 ios 的实现机制不一样
                 // 安卓会持续持有照片实例
                 // 因此当来回切换时，照片的选中状态还在，这里要重置一下
-                selectedPhotoList.forEach {
+                selectedAssetList.forEach {
                     it.order = -1
                 }
-                selectedPhotoList.clear()
-                onSelectedPhotoListChange?.invoke()
+                selectedAssetList.clear()
+                onSelectedAssetListChange?.invoke()
             }
 
             adapter?.notifyDataSetChanged()
 
         }
 
-    var selectedPhotoList = mutableListOf<PhotoAsset>()
+    var selectedAssetList = mutableListOf<Asset>()
 
     private lateinit var configuration: PhotoPickerConfiguration
 
@@ -57,19 +57,19 @@ class PhotoGrid: FrameLayout {
     private var cellPixelSize = 0
 
     private val paddingHorizontal: Int by lazy {
-        resources.getDimensionPixelSize(R.dimen.photo_picker_photo_grid_padding_horizontal)
+        resources.getDimensionPixelSize(R.dimen.photo_picker_asset_grid_padding_horizontal)
     }
 
     private val paddingVertical: Int by lazy {
-        resources.getDimensionPixelSize(R.dimen.photo_picker_photo_grid_padding_vertical)
+        resources.getDimensionPixelSize(R.dimen.photo_picker_asset_grid_padding_vertical)
     }
 
     private val rowSpacing: Int by lazy {
-        resources.getDimensionPixelSize(R.dimen.photo_picker_photo_grid_row_spacing)
+        resources.getDimensionPixelSize(R.dimen.photo_picker_asset_grid_row_spacing)
     }
 
     private val columnSpacing: Int by lazy {
-        resources.getDimensionPixelSize(R.dimen.photo_picker_photo_grid_column_spacing)
+        resources.getDimensionPixelSize(R.dimen.photo_picker_asset_grid_column_spacing)
     }
 
     constructor(context: Context) : super(context) {
@@ -85,7 +85,7 @@ class PhotoGrid: FrameLayout {
     }
 
     private fun init() {
-        LayoutInflater.from(context).inflate(R.layout.photo_picker_photo_grid, this)
+        LayoutInflater.from(context).inflate(R.layout.photo_picker_asset_grid, this)
     }
 
     fun init(configuration: PhotoPickerConfiguration) {
@@ -96,7 +96,7 @@ class PhotoGrid: FrameLayout {
 
         adapter = PhotoGridAdapter()
 
-        gridView.layoutManager = GridLayoutManager(context, configuration.photoGirdSpanCount)
+        gridView.layoutManager = GridLayoutManager(context, configuration.assetGirdSpanCount)
 
         gridView.adapter = adapter
 
@@ -111,7 +111,7 @@ class PhotoGrid: FrameLayout {
 
     private fun updateCellSize() {
 
-        val columnCount = configuration.photoGirdSpanCount
+        val columnCount = configuration.assetGirdSpanCount
         val spacing = columnSpacing * (columnCount - 1) - paddingHorizontal * 2
 
         val cellPixelSize = Math.max((width - spacing) / columnCount, 0)
@@ -129,11 +129,11 @@ class PhotoGrid: FrameLayout {
 
     }
 
-    private fun toggleChecked(photo: PhotoAsset) {
+    private fun toggleChecked(asset: Asset) {
 
         // checked 获取反选值
-        val checked = photo.order < 0
-        val selectedCount = selectedPhotoList.count()
+        val checked = asset.order < 0
+        val selectedCount = selectedAssetList.count()
 
         if (checked) {
 
@@ -143,35 +143,35 @@ class PhotoGrid: FrameLayout {
                 return
             }
 
-            photo.order = selectedCount
-            selectedPhotoList.add(photo)
-            onSelectedPhotoListChange?.invoke()
+            asset.order = selectedCount
+            selectedAssetList.add(asset)
+            onSelectedAssetListChange?.invoke()
 
             // 到达最大值，就无法再选了
             if (selectedCount + 1 == configuration.maxSelectCount) {
                 adapter?.notifyDataSetChanged()
             }
             else {
-                adapter?.notifyItemChanged(photo.index)
+                adapter?.notifyItemChanged(asset.index)
             }
 
         }
         else {
 
-            selectedPhotoList.removeAt(photo.order)
-            onSelectedPhotoListChange?.invoke()
+            selectedAssetList.removeAt(asset.order)
+            onSelectedAssetListChange?.invoke()
 
-            photo.order = -1
+            asset.order = -1
 
             val changes = mutableListOf<Int>()
 
-            changes.add(photo.index)
+            changes.add(asset.index)
 
             // 重排顺序
-            selectedPhotoList.forEachIndexed { index, photoAsset ->
-                if (index != photoAsset.order) {
-                    photoAsset.order = index
-                    changes.add(photoAsset.index)
+            selectedAssetList.forEachIndexed { index, asset ->
+                if (index != asset.order) {
+                    asset.order = index
+                    changes.add(asset.index)
                 }
             }
 
@@ -189,37 +189,37 @@ class PhotoGrid: FrameLayout {
 
     }
 
-    inner class PhotoGridAdapter : RecyclerView.Adapter<PhotoItem>() {
+    inner class PhotoGridAdapter : RecyclerView.Adapter<AssetItem>() {
 
         override fun getItemCount(): Int {
-            return photoList.count()
+            return assetList.count()
         }
 
-        override fun onBindViewHolder(holder: PhotoItem, position: Int) {
+        override fun onBindViewHolder(holder: AssetItem, position: Int) {
 
-            val photo = photoList[position]
+            val asset = assetList[position]
 
-            photo.index = position
+            asset.index = position
 
             // 选中状态下可以反选
-            if (photo.order >= 0) {
-                photo.selectable = true
+            if (asset.order >= 0) {
+                asset.selectable = true
             }
             else {
-                photo.selectable = selectedPhotoList.count() < configuration.maxSelectCount
+                asset.selectable = selectedAssetList.count() < configuration.maxSelectCount
             }
 
-            holder.bind(photo, cellPixelSize)
+            holder.bind(asset, cellPixelSize)
 
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItem {
-            val view = LayoutInflater.from(context).inflate(R.layout.photo_picker_photo_item, null)
-            return PhotoItem(
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AssetItem {
+            val view = LayoutInflater.from(context).inflate(R.layout.photo_picker_asset_item, null)
+            return AssetItem(
                 view,
                 configuration,
                 {
-                    onPhotoClick?.invoke(it)
+                    onAssetClick?.invoke(it)
                 },
                 {
                     toggleChecked(it)
@@ -235,8 +235,8 @@ class PhotoGrid: FrameLayout {
                                     parent: RecyclerView, state: RecyclerView.State?) {
 
             val index = parent.getChildAdapterPosition(view)
-            val columnCount = configuration.photoGirdSpanCount
-            val rowCount = photoList.count() / columnCount
+            val columnCount = configuration.assetGirdSpanCount
+            val rowCount = assetList.count() / columnCount
             val rowIndex = index / columnCount
             val columnIndex = index % columnCount
 

@@ -5,10 +5,10 @@ import android.view.View
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.R
 import com.github.herokotlin.photopicker.model.AssetType
-import com.github.herokotlin.photopicker.model.PhotoAsset
-import kotlinx.android.synthetic.main.photo_picker_photo_item.view.*
+import com.github.herokotlin.photopicker.model.Asset
+import kotlinx.android.synthetic.main.photo_picker_asset_item.view.*
 
-class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((PhotoAsset) -> Unit), private val onToggleChecked: ((PhotoAsset) -> Unit)): RecyclerView.ViewHolder(view) {
+class AssetItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((Asset) -> Unit), private val onToggleChecked: ((Asset) -> Unit)): RecyclerView.ViewHolder(view) {
 
     private val thumbnailView = view.thumbnailView
 
@@ -33,7 +33,7 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
 
         }
 
-    private lateinit var photo: PhotoAsset
+    private lateinit var asset: Asset
 
     private var checked = false
 
@@ -44,8 +44,8 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
 
             field = value
 
-            selectButton.checked = photo.order >= 0
-            selectButton.order = if (configuration.countable && photo.order >= 0) photo.order + 1 else -1
+            selectButton.checked = asset.order >= 0
+            selectButton.order = if (configuration.countable && asset.order >= 0) asset.order + 1 else -1
 
         }
 
@@ -69,25 +69,25 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
         // overlayView 如果是透明色，点击会穿透
         selectButton.setOnClickListener {
             if (selectable) {
-                onToggleChecked.invoke(photo)
+                onToggleChecked.invoke(asset)
             }
         }
 
         view.setOnClickListener {
             if (selectable) {
-                onClick.invoke(photo)
+                onClick.invoke(asset)
             }
         }
     }
 
-    fun bind(photo: PhotoAsset, pixelSize: Int) {
+    fun bind(asset: Asset, pixelSize: Int) {
 
-        this.photo = photo
+        this.asset = asset
         this.pixelSize = pixelSize
 
-        configuration.loadPhoto(itemView.thumbnailView, photo.path, R.drawable.photo_picker_photo_thumbnail_loading_placeholder, R.drawable.photo_picker_photo_thumbnail_error_placeholder)
+        configuration.loadAsset(itemView.thumbnailView, asset.path, R.drawable.photo_picker_asset_thumbnail_loading_placeholder, R.drawable.photo_picker_asset_thumbnail_error_placeholder)
 
-        val drawable = when (photo.type) {
+        val drawable = when (asset.type) {
             AssetType.GIF -> {
                 R.drawable.photo_picker_badge_gif
             }
@@ -107,8 +107,8 @@ class PhotoItem(view: View, private val configuration: PhotoPickerConfiguration,
             badgeView.visibility = View.GONE
         }
 
-        checked = photo.order >= 0
-        selectable = photo.selectable
+        checked = asset.order >= 0
+        selectable = asset.selectable
 
     }
 

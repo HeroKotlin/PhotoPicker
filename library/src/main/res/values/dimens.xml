@@ -17,14 +17,14 @@
 
 
 
-    <dimen name="photo_picker_photo_grid_padding_horizontal">2dp</dimen>
-    <dimen name="photo_picker_photo_grid_padding_vertical">2dp</dimen>
+    <dimen name="photo_picker_asset_grid_padding_horizontal">2dp</dimen>
+    <dimen name="photo_picker_asset_grid_padding_vertical">2dp</dimen>
 
-    <dimen name="photo_picker_photo_grid_column_spacing">2dp</dimen>
-    <dimen name="photo_picker_photo_grid_row_spacing">2dp</dimen>
+    <dimen name="photo_picker_asset_grid_column_spacing">2dp</dimen>
+    <dimen name="photo_picker_asset_grid_row_spacing">2dp</dimen>
 
-    <dimen name="photo_picker_photo_badge_margin_bottom">5dp</dimen>
-    <dimen name="photo_picker_photo_badge_margin_right">5dp</dimen>
+    <dimen name="photo_picker_asset_badge_margin_bottom">5dp</dimen>
+    <dimen name="photo_picker_asset_badge_margin_right">5dp</dimen>
 
     <dimen name="photo_picker_top_bar_height">44dp</dimen>
     <dimen name="photo_picker_top_bar_padding_horizontal">0dp</dimen>

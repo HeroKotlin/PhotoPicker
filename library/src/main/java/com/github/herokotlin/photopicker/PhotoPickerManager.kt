@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.*
 import android.provider.MediaStore
-import com.github.herokotlin.photopicker.model.AlbumAsset
-import com.github.herokotlin.photopicker.model.PhotoAsset
+import com.github.herokotlin.photopicker.model.Album
+import com.github.herokotlin.photopicker.model.Asset
 import java.io.File
 import java.util.*
 
@@ -25,9 +25,9 @@ object PhotoPickerManager {
 
     private lateinit var onScanComplete: () -> Unit
 
-    private var allPhotos = mutableListOf<PhotoAsset>()
+    private var allPhotos = mutableListOf<Asset>()
 
-    private val allAlbums = HashMap<String, MutableList<PhotoAsset>>()
+    private val allAlbums = HashMap<String, MutableList<Asset>>()
 
     private val handler = object: Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message?) {
@@ -71,7 +71,7 @@ object PhotoPickerManager {
                 val height = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.HEIGHT))
                 val size = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.SIZE))
 
-                val photo = PhotoAsset.build(path, width, height, size)
+                val photo = Asset.build(path, width, height, size)
 
                 if (!configuration.filterPhoto(photo.width, photo.height, photo.type)) {
                     continue
@@ -105,28 +105,28 @@ object PhotoPickerManager {
 
     }
 
-    fun fetchAlbumList(configuration: PhotoPickerConfiguration): List<AlbumAsset> {
+    fun fetchAlbumList(configuration: PhotoPickerConfiguration): List<Album> {
 
-        val result = mutableListOf<AlbumAsset>()
+        val result = mutableListOf<Album>()
 
         result.add(
-            AlbumAsset.build(configuration.allPhotosAlbumTitle, allPhotos)
+            Album.build(configuration.allPhotosAlbumTitle, allPhotos)
         )
 
         allAlbums.keys.forEach { title ->
             allAlbums[title]?.let {
                 val list = it.toList()
                 result.add(
-                    AlbumAsset.build(title, list)
+                    Album.build(title, list)
                 )
             }
         }
 
-        return result.filter { configuration.filterAlbum(it.title, it.photoList.count()) }
+        return result.filter { configuration.filterAlbum(it.title, it.assetList.count()) }
 
     }
 
-    fun fetchPhotoList(album: String): List<PhotoAsset> {
+    fun fetchPhotoList(album: String): List<Asset> {
         if (allAlbums.contains(album)) {
             return allAlbums[album]!!
         }

@@ -10,14 +10,14 @@ import android.widget.FrameLayout
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 
 import com.github.herokotlin.photopicker.R
-import com.github.herokotlin.photopicker.model.AlbumAsset
+import com.github.herokotlin.photopicker.model.Album
 import kotlinx.android.synthetic.main.photo_picker_album_list.view.*
 
 class AlbumList : FrameLayout {
 
-    var onAlbumClick: ((AlbumAsset) -> Unit)? = null
+    var onAlbumClick: ((Album) -> Unit)? = null
 
-    var albumList = listOf<AlbumAsset>()
+    var albumList = listOf<Album>()
 
         set(value) {
 

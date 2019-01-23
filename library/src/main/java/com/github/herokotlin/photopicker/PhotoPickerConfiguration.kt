@@ -7,9 +7,9 @@ import com.github.herokotlin.photopicker.model.AssetType
 abstract class PhotoPickerConfiguration {
 
     /**
-     * 照片网格每行多少个
+     * 网格每行多少个
      */
-    var photoGirdSpanCount = 3
+    var assetGirdSpanCount = 3
 
     /**
      * 最多选择多少张照片
@@ -37,7 +37,7 @@ abstract class PhotoPickerConfiguration {
     /**
      * 加载图片
      */
-    abstract fun loadPhoto(imageView: ImageView, url: String, loadinngPlaceholder: Int, errorPlaceholder: Int)
+    abstract fun loadAsset(imageView: ImageView, url: String, loadinngPlaceholder: Int, errorPlaceholder: Int)
 
     /**
      * 过滤相册
