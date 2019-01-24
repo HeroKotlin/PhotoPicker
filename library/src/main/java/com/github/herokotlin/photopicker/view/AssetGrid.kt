@@ -168,10 +168,10 @@ class AssetGrid: FrameLayout {
             changes.add(asset.index)
 
             // 重排顺序
-            selectedAssetList.forEachIndexed { index, asset ->
-                if (index != asset.order) {
-                    asset.order = index
-                    changes.add(asset.index)
+            selectedAssetList.forEachIndexed { index, item ->
+                if (index != item.order) {
+                    item.order = index
+                    changes.add(item.index)
                 }
             }
 
@@ -231,8 +231,7 @@ class AssetGrid: FrameLayout {
 
     inner class PhotoGridDecoration : RecyclerView.ItemDecoration() {
 
-        override fun getItemOffsets(rect: Rect, view: View,
-                                    parent: RecyclerView, state: RecyclerView.State?) {
+        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
 
             val index = parent.getChildAdapterPosition(view)
             val columnCount = configuration.assetGirdSpanCount
@@ -241,26 +240,27 @@ class AssetGrid: FrameLayout {
             val columnIndex = index % columnCount
 
             if (rowIndex == 0) {
-                rect.top = paddingVertical
+                outRect.top = paddingVertical
             }
             else {
-                rect.top = rowSpacing
+                outRect.top = rowSpacing
                 if (rowIndex == rowCount) {
-                    rect.bottom = paddingVertical
+                    outRect.bottom = paddingVertical
                 }
             }
 
             if (columnIndex == 0) {
-                rect.left = paddingHorizontal
+                outRect.left = paddingHorizontal
             }
             else {
-                rect.left = columnSpacing
+                outRect.left = columnSpacing
                 if (columnIndex == columnCount - 1) {
-                    rect.right = paddingHorizontal
+                    outRect.right = paddingHorizontal
                 }
             }
 
         }
+
     }
 
 }

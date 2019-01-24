@@ -5,13 +5,9 @@ import com.github.herokotlin.photopicker.model.PickedAsset
 
 interface PhotoPickerCallback {
 
-    fun onCancel(activity: Activity) {
+    fun onCancel(activity: Activity)
 
-    }
-
-    fun onSubmit(activity: Activity, assetList: List<PickedAsset>) {
-
-    }
+    fun onSubmit(activity: Activity, assetList: List<PickedAsset>)
 
     // 拉取相册数据时，发现没权限
     fun onFetchWithoutPermissions(activity: Activity) {
