@@ -21,12 +21,24 @@ abstract class PhotoPickerConfiguration {
      */
     var countable = true
 
+    /**
+     * 排序字段
+     */
     var assetSortField = MediaStore.Images.Media.DATE_ADDED
 
+    /**
+     * 是否正序
+     */
     var assetSortAscending = false
 
+    /**
+     * 支持的文件类型
+     */
     var assetMimeTypes = arrayOf("image/jpeg", "image/png", "image/gif", "image/webp")
 
+    /**
+     * "所有图片" 专辑的标题
+     */
     var allPhotosAlbumTitle = "所有照片"
 
     /**

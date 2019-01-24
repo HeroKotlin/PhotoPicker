@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -72,13 +71,6 @@ class PhotoPickerActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
-        var flags = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            flags = flags or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        }
-
-        window.decorView.systemUiVisibility = flags
 
         supportActionBar?.hide()
 

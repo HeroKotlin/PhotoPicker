@@ -28,6 +28,6 @@
 
     <color name="photo_picker_title_button_title_text_color">#666</color>
 
-    <color name="photo_picker_cancel_button_title_text_color">#888</color>
+    <color name="photo_picker_cancel_button_title_text_color">#666</color>
 
 </resources>
