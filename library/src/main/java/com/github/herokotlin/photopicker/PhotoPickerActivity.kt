@@ -28,9 +28,9 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         lateinit var configuration: PhotoPickerConfiguration
 
-        fun newInstance(context: Activity, requestCode: Int) {
+        fun newInstance(context: Activity) {
             val intent = Intent(context, PhotoPickerActivity::class.java)
-            context.startActivityForResult(intent, requestCode)
+            context.startActivity(intent)
         }
 
     }

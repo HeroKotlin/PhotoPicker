@@ -22,11 +22,11 @@ class BottomBar: RelativeLayout {
 
             field = value
 
-            fullButton.image = if (value) {
-                R.drawable.photo_picker_full_button_checked
+            rawButton.image = if (value) {
+                R.drawable.photo_picker_raw_button_checked
             }
             else {
-                R.drawable.photo_picker_full_button_unchecked
+                R.drawable.photo_picker_raw_button_unchecked
             }
 
         }
@@ -77,7 +77,7 @@ class BottomBar: RelativeLayout {
 
         LayoutInflater.from(context).inflate(R.layout.photo_picker_bottom_bar, this)
 
-        fullButton.setOnClickListener {
+        rawButton.setOnClickListener {
             isFullChecked = !isFullChecked
         }
 

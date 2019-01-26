@@ -33,7 +33,29 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
 
         }
 
-    private lateinit var asset: Asset
+    private var asset: Asset? = null
+
+        set(value) {
+
+            if (field == value) {
+                return
+            }
+
+            field = value
+
+            selectButton.visibility = View.GONE
+            configuration.loadAsset(
+                itemView.thumbnailView,
+                value!!.path,
+                R.drawable.photo_picker_asset_thumbnail_loading_placeholder,
+                R.drawable.photo_picker_asset_thumbnail_error_placeholder
+            ) {
+                if (it) {
+                    selectButton.visibility = View.VISIBLE
+                }
+            }
+
+        }
 
     private var checked = false
 
@@ -44,8 +66,8 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
 
             field = value
 
-            selectButton.checked = asset.order >= 0
-            selectButton.order = if (configuration.countable && asset.order >= 0) asset.order + 1 else -1
+            selectButton.checked = asset!!.order >= 0
+            selectButton.order = if (configuration.countable && asset!!.order >= 0) asset!!.order + 1 else -1
 
         }
 
@@ -69,13 +91,13 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
         // overlayView 如果是透明色，点击会穿透
         selectButton.setOnClickListener {
             if (selectable) {
-                onToggleChecked.invoke(asset)
+                onToggleChecked.invoke(asset!!)
             }
         }
 
         view.setOnClickListener {
             if (selectable) {
-                onClick.invoke(asset)
+                onClick.invoke(asset!!)
             }
         }
     }
@@ -84,8 +106,6 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
 
         this.asset = asset
         this.pixelSize = pixelSize
-
-        configuration.loadAsset(itemView.thumbnailView, asset.path, R.drawable.photo_picker_asset_thumbnail_loading_placeholder, R.drawable.photo_picker_asset_thumbnail_error_placeholder)
 
         val drawable = when (asset.type) {
             AssetType.GIF -> {

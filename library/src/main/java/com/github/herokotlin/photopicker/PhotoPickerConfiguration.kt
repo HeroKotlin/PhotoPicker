@@ -1,5 +1,6 @@
 package com.github.herokotlin.photopicker
 
+import android.graphics.Bitmap
 import android.provider.MediaStore
 import android.widget.ImageView
 import com.github.herokotlin.photopicker.model.AssetType
@@ -49,7 +50,7 @@ abstract class PhotoPickerConfiguration {
     /**
      * 加载图片
      */
-    abstract fun loadAsset(imageView: ImageView, url: String, loadinngPlaceholder: Int, errorPlaceholder: Int)
+    abstract fun loadAsset(imageView: ImageView, url: String, loading: Int, error: Int, onComplete: (Boolean) -> Unit)
 
     /**
      * 过滤相册

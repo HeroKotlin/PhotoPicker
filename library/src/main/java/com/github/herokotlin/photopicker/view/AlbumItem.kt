@@ -34,7 +34,14 @@ class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration,
 
         val poster = album.poster
         if (poster != null) {
-            configuration.loadAsset(posterView, poster.path, R.drawable.photo_picker_album_poster_loading_placeholder, R.drawable.photo_picker_album_poster_error_placeholder)
+            configuration.loadAsset(
+                posterView,
+                poster.path,
+                R.drawable.photo_picker_album_poster_loading_placeholder,
+                R.drawable.photo_picker_album_poster_error_placeholder
+            ) {
+
+            }
         }
         else {
             posterView.setImageResource(R.drawable.photo_picker_album_empty_placeholder)

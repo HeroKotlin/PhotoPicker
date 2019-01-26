@@ -9,7 +9,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            tools:src="@drawable/photo_picker_full_button_checked"/>
+            tools:src="@drawable/photo_picker_raw_button_checked"/>
 
     <ImageView
             android:id="@+id/badgeView"
