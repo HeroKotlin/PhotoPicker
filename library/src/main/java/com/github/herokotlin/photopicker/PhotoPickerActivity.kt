@@ -218,13 +218,18 @@ class PhotoPickerActivity: AppCompatActivity() {
         }
 
         // 排序完成之后，转成 PickedAsset
-        val isFullChecked = bottomBar.isFullChecked
+        val isRawChecked = bottomBar.isRawChecked
         val result = selectedList.map {
-            PickedAsset(it.path, it.width, it.height, it.size, it.type == AssetType.VIDEO, isFullChecked)
+            PickedAsset(it.path, it.width, it.height, it.size, it.type == AssetType.VIDEO, isRawChecked)
         }
 
         callback.onSubmit(this, result)
 
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        PhotoPickerManager.requestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 }

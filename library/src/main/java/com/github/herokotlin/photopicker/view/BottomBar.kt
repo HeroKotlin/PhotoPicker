@@ -12,7 +12,7 @@ class BottomBar: RelativeLayout {
 
     lateinit var configuration: PhotoPickerConfiguration
 
-    var isFullChecked = false
+    var isRawChecked = false
 
         set(value) {
 
@@ -78,7 +78,7 @@ class BottomBar: RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.photo_picker_bottom_bar, this)
 
         rawButton.setOnClickListener {
-            isFullChecked = !isFullChecked
+            isRawChecked = !isRawChecked
         }
 
     }

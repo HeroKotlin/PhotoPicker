@@ -3,10 +3,10 @@
               android:orientation="horizontal"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:paddingTop="@dimen/photo_picker_full_button_padding_vertical"
-              android:paddingBottom="@dimen/photo_picker_full_button_padding_vertical"
-              android:paddingLeft="@dimen/photo_picker_full_button_padding_horizontal"
-              android:paddingRight="@dimen/photo_picker_full_button_padding_horizontal">
+              android:paddingTop="@dimen/photo_picker_raw_button_padding_vertical"
+              android:paddingBottom="@dimen/photo_picker_raw_button_padding_vertical"
+              android:paddingLeft="@dimen/photo_picker_raw_button_padding_horizontal"
+              android:paddingRight="@dimen/photo_picker_raw_button_padding_horizontal">
 
     <ImageView
             android:id="@+id/imageView"
@@ -20,9 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/photo_picker_full_button_title_margin_left"
-            android:textSize="@dimen/photo_picker_full_button_title_text_size"
-            android:textColor="@color/photo_picker_full_button_title_text_color"
-            android:text="@string/photo_picker_full_button_title"/>
+            android:layout_marginLeft="@dimen/photo_picker_raw_button_title_margin_left"
+            android:textSize="@dimen/photo_picker_raw_button_title_text_size"
+            android:textColor="@color/photo_picker_raw_button_title_text_color"
+            android:text="@string/photo_picker_raw_button_title"/>
 
 </LinearLayout>
