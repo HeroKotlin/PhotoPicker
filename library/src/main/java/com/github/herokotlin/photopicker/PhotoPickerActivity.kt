@@ -75,8 +75,6 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        supportActionBar?.hide()
-
         setContentView(R.layout.photo_picker_activity)
 
 

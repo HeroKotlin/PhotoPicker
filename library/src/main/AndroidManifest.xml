@@ -2,7 +2,10 @@
           package="com.github.herokotlin.photopicker">
 
     <application>
-        <activity android:name=".PhotoPickerActivity">
+        <activity
+            android:name=".PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
