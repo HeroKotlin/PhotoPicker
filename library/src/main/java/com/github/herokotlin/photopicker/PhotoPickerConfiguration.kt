@@ -1,16 +1,12 @@
 package com.github.herokotlin.photopicker
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.provider.MediaStore
 import android.widget.ImageView
 import com.github.herokotlin.photopicker.model.AssetType
 
 abstract class PhotoPickerConfiguration {
-
-    /**
-     * 网格每行多少个
-     */
-    var assetGirdSpanCount = 3
 
     /**
      * 最多选择多少张照片
@@ -21,6 +17,26 @@ abstract class PhotoPickerConfiguration {
      * 是否支持计数
      */
     var countable = true
+
+    /**
+     * 图片的最小宽度
+     */
+    var imageMinWidth = 0
+
+    /**
+     * 图片的最小高度
+     */
+    var imageMinHeight = 0
+
+    /**
+     * 是否显示原图按钮
+     */
+    var rawButtonVisible = true
+
+    /**
+     * 网格每行多少个
+     */
+    var assetGirdSpanCount = 3
 
     /**
      * 排序字段
@@ -45,7 +61,7 @@ abstract class PhotoPickerConfiguration {
     /**
      * 请求权限
      */
-    abstract fun requestPermissions(permissions: List<String>, requestCode: Int): Boolean
+    abstract fun requestPermissions(activity: Activity, permissions: List<String>, requestCode: Int): Boolean
 
     /**
      * 加载图片
@@ -69,7 +85,7 @@ abstract class PhotoPickerConfiguration {
      * 过滤图片
      */
     open fun filterAsset(width: Int, height: Int, type: AssetType): Boolean {
-        return width > 44 && height > 44
+        return width > imageMinWidth && height > imageMinHeight
     }
 
 }

@@ -103,7 +103,11 @@ class PhotoPickerActivity: AppCompatActivity() {
         PhotoPickerManager.onFetchWithoutExternalStorage = {
             callback.onFetchWithoutExternalStorage(this)
         }
-        PhotoPickerManager.requestPermissions(configuration) {
+        PhotoPickerManager.onRequestPermissions = { permissions, requestCode ->
+            configuration.requestPermissions(this, permissions, requestCode)
+        }
+
+        PhotoPickerManager.requestPermissions {
             PhotoPickerManager.scan(this, configuration) {
                 val albumList = PhotoPickerManager.fetchAlbumList(configuration)
                 albumListView.albumList = albumList
@@ -122,6 +126,10 @@ class PhotoPickerActivity: AppCompatActivity() {
         bottomBar.configuration = configuration
         bottomBar.submitButton.setOnClickListener {
             submit()
+        }
+
+        if (!configuration.rawButtonVisible) {
+            bottomBar.rawButton.visibility = View.GONE
         }
 
     }

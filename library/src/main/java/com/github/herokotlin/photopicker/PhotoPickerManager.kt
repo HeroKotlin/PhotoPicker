@@ -13,6 +13,8 @@ object PhotoPickerManager {
 
     private const val PERMISSION_REQUEST_CODE = 12321
 
+    lateinit var onRequestPermissions: (List<String>, Int) -> Boolean
+
     var onPermissionsGranted: (() -> Unit)? = null
 
     var onPermissionsDenied: (() -> Unit)? = null
@@ -133,7 +135,7 @@ object PhotoPickerManager {
         return allPhotos
     }
 
-    fun requestPermissions(configuration: PhotoPickerConfiguration, callback: () -> Unit) {
+    fun requestPermissions(callback: () -> Unit) {
 
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
             onFetchWithoutExternalStorage?.invoke()
@@ -142,7 +144,7 @@ object PhotoPickerManager {
 
         onRequestPermissionsComplete = callback
 
-        if (configuration.requestPermissions(
+        if (onRequestPermissions(
                 listOf(
                     android.Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ),
@@ -168,7 +170,7 @@ object PhotoPickerManager {
         }
 
         onPermissionsGranted?.invoke()
-        onRequestPermissionsComplete.invoke()
+        onRequestPermissionsComplete()
 
     }
 
