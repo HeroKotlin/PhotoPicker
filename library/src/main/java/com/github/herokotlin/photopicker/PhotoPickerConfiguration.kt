@@ -49,11 +49,6 @@ abstract class PhotoPickerConfiguration {
     var assetSortAscending = false
 
     /**
-     * 支持的文件类型
-     */
-    var assetMimeTypes = arrayOf("image/jpeg", "image/png", "image/gif", "image/webp")
-
-    /**
      * "所有图片" 专辑的标题
      */
     var allPhotosAlbumTitle = "所有照片"
@@ -85,7 +80,7 @@ abstract class PhotoPickerConfiguration {
      * 过滤图片
      */
     open fun filterAsset(width: Int, height: Int, type: AssetType): Boolean {
-        return width > imageMinWidth && height > imageMinHeight
+        return width > imageMinWidth && height > imageMinHeight && type != AssetType.VIDEO
     }
 
 }

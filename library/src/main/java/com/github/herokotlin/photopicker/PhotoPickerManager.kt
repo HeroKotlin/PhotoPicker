@@ -58,8 +58,8 @@ object PhotoPickerManager {
             val cursor = contentProvider.query(
                 imageUri,
                 null,
-                configuration.assetMimeTypes.map { "${MediaStore.Images.Media.MIME_TYPE}=?" }.joinToString(" or "),
-                configuration.assetMimeTypes,
+                null,
+                null,
                 configuration.assetSortField
             )
 
