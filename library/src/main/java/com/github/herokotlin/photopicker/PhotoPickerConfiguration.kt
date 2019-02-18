@@ -1,7 +1,6 @@
 package com.github.herokotlin.photopicker
 
 import android.app.Activity
-import android.graphics.Bitmap
 import android.provider.MediaStore
 import android.widget.ImageView
 import com.github.herokotlin.photopicker.model.AssetType
