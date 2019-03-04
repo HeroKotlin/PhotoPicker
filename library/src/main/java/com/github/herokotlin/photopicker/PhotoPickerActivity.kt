@@ -12,8 +12,8 @@ import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.webkit.URLUtil
+import com.github.herokotlin.photopicker.enum.AssetType
 import com.github.herokotlin.photopicker.model.Album
-import com.github.herokotlin.photopicker.model.AssetType
 import com.github.herokotlin.photopicker.model.Asset
 import com.github.herokotlin.photopicker.model.PickedAsset
 import kotlinx.android.synthetic.main.photo_picker_activity.*

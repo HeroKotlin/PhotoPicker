@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import com.github.herokotlin.photopicker.R
 import kotlinx.android.synthetic.main.photo_picker_title_button.view.*
 
-class TitleButton: LinearLayout {
+internal class TitleButton: LinearLayout {
 
     var title = ""
 

@@ -8,7 +8,7 @@ import android.widget.RelativeLayout
 import com.github.herokotlin.photopicker.R
 import kotlinx.android.synthetic.main.photo_picker_select_button.view.*
 
-class SelectButton: RelativeLayout {
+internal class SelectButton: RelativeLayout {
 
     var countable = false
 
@@ -22,19 +22,19 @@ class SelectButton: RelativeLayout {
 
             field = value
 
-            val drawable = if (value) {
-                if (countable) {
-                    R.drawable.photo_picker_select_button_checked_countable
+            imageView.setImageResource(
+                if (value) {
+                    if (countable) {
+                        R.drawable.photo_picker_select_button_checked_countable
+                    }
+                    else {
+                        R.drawable.photo_picker_select_button_checked
+                    }
                 }
                 else {
-                    R.drawable.photo_picker_select_button_checked
+                    R.drawable.photo_picker_select_button_unchecked
                 }
-            }
-            else {
-                R.drawable.photo_picker_select_button_unchecked
-            }
-
-            imageView.setImageResource(drawable)
+            )
 
         }
 

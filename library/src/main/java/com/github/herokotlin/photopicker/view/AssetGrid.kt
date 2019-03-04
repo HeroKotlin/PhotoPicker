@@ -202,11 +202,11 @@ class AssetGrid: FrameLayout {
             asset.index = position
 
             // 选中状态下可以反选
-            if (asset.order >= 0) {
-                asset.selectable = true
+            asset.selectable = if (asset.order >= 0) {
+                true
             }
             else {
-                asset.selectable = selectedAssetList.count() < configuration.maxSelectCount
+                selectedAssetList.count() < configuration.maxSelectCount
             }
 
             holder.bind(asset, cellPixelSize)

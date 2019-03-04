@@ -1,6 +1,7 @@
 package com.github.herokotlin.photopicker.model
 
 import android.webkit.MimeTypeMap
+import com.github.herokotlin.photopicker.enum.AssetType
 
 data class Asset(
     val path: String,

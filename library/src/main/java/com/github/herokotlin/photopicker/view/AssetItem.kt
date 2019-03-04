@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.R
-import com.github.herokotlin.photopicker.model.AssetType
+import com.github.herokotlin.photopicker.enum.AssetType
 import com.github.herokotlin.photopicker.model.Asset
 import kotlinx.android.synthetic.main.photo_picker_asset_item.view.*
 

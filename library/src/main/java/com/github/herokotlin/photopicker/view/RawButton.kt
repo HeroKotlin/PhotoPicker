@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import com.github.herokotlin.photopicker.R
 import kotlinx.android.synthetic.main.photo_picker_raw_button.view.*
 
-class RawButton: LinearLayout {
+internal class RawButton: LinearLayout {
 
     var image = 0
 

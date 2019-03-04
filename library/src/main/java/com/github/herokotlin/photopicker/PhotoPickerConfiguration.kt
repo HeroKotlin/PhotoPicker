@@ -3,7 +3,9 @@ package com.github.herokotlin.photopicker
 import android.app.Activity
 import android.provider.MediaStore
 import android.widget.ImageView
-import com.github.herokotlin.photopicker.model.AssetType
+import com.github.herokotlin.photopicker.enum.AssetType
+import com.github.herokotlin.photopicker.model.Album
+import com.github.herokotlin.photopicker.model.Asset
 
 abstract class PhotoPickerConfiguration {
 
@@ -38,14 +40,9 @@ abstract class PhotoPickerConfiguration {
     var assetGirdSpanCount = 3
 
     /**
-     * 排序字段
+     * 排序方式
      */
-    var assetSortField = MediaStore.Images.Media.DATE_ADDED
-
-    /**
-     * 是否正序
-     */
-    var assetSortAscending = false
+    var assetSortBy = MediaStore.Images.Media.DATE_ADDED + " DESC"
 
     /**
      * "所有图片" 专辑的标题
@@ -65,11 +62,11 @@ abstract class PhotoPickerConfiguration {
     /**
      * 过滤相册
      */
-    open fun filterAlbum(title: String, count: Int): Boolean {
-        if (count == 0) {
+    open fun filter(album: Album): Boolean {
+        if (album.assetList.count() == 0) {
             return false
         }
-        if (title.startsWith("drawable-")) {
+        if (album.title.startsWith("drawable-")) {
             return false
         }
         return true
@@ -78,8 +75,8 @@ abstract class PhotoPickerConfiguration {
     /**
      * 过滤图片
      */
-    open fun filterAsset(width: Int, height: Int, type: AssetType): Boolean {
-        return width > imageMinWidth && height > imageMinHeight && type != AssetType.VIDEO
+    open fun filter(asset: Asset): Boolean {
+        return asset.width > imageMinWidth && asset.height > imageMinHeight && asset.type != AssetType.VIDEO
     }
 
 }

@@ -8,7 +8,7 @@ import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.R
 import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
 
-class BottomBar: RelativeLayout {
+internal class BottomBar: RelativeLayout {
 
     lateinit var configuration: PhotoPickerConfiguration
 

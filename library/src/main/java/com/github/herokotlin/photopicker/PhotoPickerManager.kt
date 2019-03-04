@@ -60,7 +60,7 @@ object PhotoPickerManager {
                 null,
                 null,
                 null,
-                configuration.assetSortField
+                configuration.assetSortBy
             )
 
             allAlbums.clear()
@@ -75,7 +75,7 @@ object PhotoPickerManager {
 
                 val photo = Asset.build(path, width, height, size)
 
-                if (!configuration.filterAsset(photo.width, photo.height, photo.type)) {
+                if (!configuration.filter(photo)) {
                     continue
                 }
 
@@ -89,13 +89,6 @@ object PhotoPickerManager {
                     allAlbums[albumName]?.add(photo)
                 }
 
-            }
-
-            if (!configuration.assetSortAscending) {
-                allPhotos.reverse()
-                allAlbums.values.forEach {
-                    it.reverse()
-                }
             }
 
             cursor.close()
@@ -124,7 +117,7 @@ object PhotoPickerManager {
             }
         }
 
-        return result.filter { configuration.filterAlbum(it.title, it.assetList.count()) }
+        return result.filter { configuration.filter(it) }
 
     }
 
