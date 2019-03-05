@@ -32,23 +32,32 @@ data class Asset(
                 return null
             }
 
-            var type = AssetType.IMAGE
-
             val parts = mimeType.split("/")
-            when (parts[0]) {
+
+            val type = when (parts[0]) {
                 "video" -> {
-                    type = AssetType.VIDEO
+                    AssetType.VIDEO
                 }
                 "image" -> {
                     when (parts[1]) {
                         "gif" -> {
-                            type = AssetType.GIF
+                            AssetType.GIF
                         }
                         "webp" -> {
-                            type = AssetType.WEBP
+                            AssetType.WEBP
+                        }
+                        else -> {
+                            AssetType.IMAGE
                         }
                     }
                 }
+                else -> {
+                    AssetType.UNKNOWN
+                }
+            }
+
+            if (type == AssetType.UNKNOWN) {
+                return null
             }
 
             return Asset(path, name, width, height, size, type)

@@ -1,7 +1,6 @@
 package com.github.herokotlin.photopicker
 
 import android.app.Activity
-import android.provider.MediaStore
 import android.widget.ImageView
 import com.github.herokotlin.photopicker.enum.AssetType
 import com.github.herokotlin.photopicker.model.Album
@@ -40,9 +39,36 @@ abstract class PhotoPickerConfiguration {
     var assetGirdSpanCount = 3
 
     /**
-     * 排序方式
+     * 扫描磁盘时，设置包含的文件类型（include 和 exclude 只能二选一）
      */
-    var assetSortBy = MediaStore.Images.Media.DATE_ADDED + " DESC"
+    var includeAssetMediaTypes = listOf(
+        PhotoPickerConstant.MEDIA_TYPE_IMAGE
+    )
+
+    /**
+     * 扫描磁盘时，设置剔除的文件类型
+     */
+    var excludeAssetMediaTypes = listOf<Int>()
+
+    /**
+     * 文件最小尺寸，设置为 0 表示不限制
+     */
+    var assetMinSize = PhotoPickerConstant.SIZE_KB
+
+    /**
+     * 文件最大尺寸，设置为 0 表示不限制
+     */
+    var assetMaxSize = 10 * PhotoPickerConstant.SIZE_MB
+
+    /**
+     * 排序字段
+     */
+    var assetSortField = PhotoPickerConstant.FIELD_UPDATE_TIME
+
+    /**
+     * 是否正序
+     */
+    var assetSortAscending = false
 
     /**
      * "所有图片" 专辑的标题
@@ -76,7 +102,10 @@ abstract class PhotoPickerConfiguration {
      * 过滤图片
      */
     open fun filter(asset: Asset): Boolean {
-        return asset.width > imageMinWidth && asset.height > imageMinHeight && asset.type != AssetType.VIDEO
+        if (asset.type != AssetType.VIDEO) {
+            return asset.width > imageMinWidth && asset.height > imageMinHeight
+        }
+        return true
     }
 
 }

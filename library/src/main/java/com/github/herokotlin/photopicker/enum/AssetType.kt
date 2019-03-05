@@ -8,6 +8,8 @@ enum class AssetType {
 
     GIF,
 
-    WEBP
+    WEBP,
+
+    UNKNOWN
 
 }

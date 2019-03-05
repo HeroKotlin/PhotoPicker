@@ -52,47 +52,55 @@ object PhotoPickerManager {
             // 存储当前线程，方便停止
             scanTask = Thread.currentThread()
 
-            val imageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             val contentProvider = context.contentResolver
 
             val cursor = contentProvider.query(
-                imageUri,
+                MediaStore.Files.getContentUri("external"),
+                PhotoPickerConstant.FILE_FIELDS,
+                getSelection(
+                    configuration.assetMinSize,
+                    configuration.assetMaxSize,
+                    configuration.includeAssetMediaTypes,
+                    configuration.excludeAssetMediaTypes
+                ),
                 null,
-                null,
-                null,
-                configuration.assetSortBy
+                configuration.assetSortField + " " + if (configuration.assetSortAscending) "ASC" else "DESC"
             )
 
-            allAlbums.clear()
-            allPhotos.clear()
+            cursor?.let {
 
-            while (cursor.moveToNext()) {
+                allAlbums.clear()
+                allPhotos.clear()
 
-                val path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA))
-                val width = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.WIDTH))
-                val height = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.HEIGHT))
-                val size = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.SIZE))
-                val mimeType = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE))
+                while (it.moveToNext()) {
 
-                val photo = Asset.build(path, width, height, size, mimeType)
+                    val photo = Asset.build(
+                        it.getString(it.getColumnIndex(PhotoPickerConstant.FIELD_PATH)),
+                        it.getInt(it.getColumnIndex(PhotoPickerConstant.FIELD_WIDTH)),
+                        it.getInt(it.getColumnIndex(PhotoPickerConstant.FIELD_HEIGHT)),
+                        it.getInt(it.getColumnIndex(PhotoPickerConstant.FIELD_SIZE)),
+                        it.getString(it.getColumnIndex(PhotoPickerConstant.FIELD_MIME_TYPE))
+                    )
 
-                if (photo == null || !configuration.filter(photo)) {
-                    continue
-                }
-
-                allPhotos.add(photo)
-
-                val albumName = getAlbumName(path)
-                if (!albumName.isEmpty()) {
-                    if (!allAlbums.contains(albumName)) {
-                        allAlbums[albumName] = mutableListOf()
+                    if (photo == null || !configuration.filter(photo)) {
+                        continue
                     }
-                    allAlbums[albumName]?.add(photo)
+
+                    allPhotos.add(photo)
+
+                    val albumName = getAlbumName(photo.path)
+                    if (!albumName.isEmpty()) {
+                        if (!allAlbums.contains(albumName)) {
+                            allAlbums[albumName] = mutableListOf()
+                        }
+                        allAlbums[albumName]?.add(photo)
+                    }
+
                 }
+
+                it.close()
 
             }
-
-            cursor.close()
 
             // 回到主线程
             handler.sendEmptyMessage(0)
@@ -175,6 +183,44 @@ object PhotoPickerManager {
             return parts[count - 2]
         }
         return ""
+    }
+
+    private fun getSelection(minSize: Int, maxSize: Int, includeMediaTypes: List<Int>, excludeMediaTypes: List<Int>): String? {
+
+        val list = mutableListOf<String>()
+
+        val sizeList = mutableListOf<String>()
+        if (minSize > 0) {
+            sizeList.add(
+                "${PhotoPickerConstant.FIELD_SIZE} >= $minSize"
+            )
+        }
+        if (maxSize > 0) {
+            sizeList.add(
+                "${PhotoPickerConstant.FIELD_SIZE} <= $maxSize"
+            )
+        }
+        if (sizeList.count() > 0) {
+            list.add(
+                sizeList.joinToString(" AND ")
+            )
+        }
+
+        if (includeMediaTypes.count() > 0) {
+            val item = includeMediaTypes.map {"${PhotoPickerConstant.FIELD_MEDIA_TYPE} == $it" }
+            list.add(item.joinToString(" OR "))
+        }
+        else if (excludeMediaTypes.count() > 0) {
+            val item = excludeMediaTypes.map {"${PhotoPickerConstant.FIELD_MEDIA_TYPE} != $it" }
+            list.add(item.joinToString(" AND "))
+        }
+
+        if (list.count() > 0) {
+            return list.joinToString(" AND ")
+        }
+
+        return null
+
     }
 
 }
