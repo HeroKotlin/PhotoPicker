@@ -72,10 +72,11 @@ object PhotoPickerManager {
                 val width = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.WIDTH))
                 val height = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.HEIGHT))
                 val size = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.SIZE))
+                val mimeType = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE))
 
-                val photo = Asset.build(path, width, height, size)
+                val photo = Asset.build(path, width, height, size, mimeType)
 
-                if (!configuration.filter(photo)) {
+                if (photo == null || !configuration.filter(photo)) {
                     continue
                 }
 

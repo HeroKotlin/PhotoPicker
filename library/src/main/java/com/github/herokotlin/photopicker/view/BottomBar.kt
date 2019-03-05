@@ -46,7 +46,7 @@ internal class BottomBar: RelativeLayout {
                 submitButton.isEnabled = true
                 submitButton.alpha = 1f
                 if (configuration.maxSelectCount > 1) {
-                    title = "$submitButtonTitle($selectedCount/${configuration.maxSelectCount})"
+                    title = "$submitButtonTitle($value/${configuration.maxSelectCount})"
                 }
             }
             else {

@@ -11,8 +11,6 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
-import android.webkit.URLUtil
-import com.github.herokotlin.photopicker.enum.AssetType
 import com.github.herokotlin.photopicker.model.Album
 import com.github.herokotlin.photopicker.model.Asset
 import com.github.herokotlin.photopicker.model.PickedAsset
@@ -20,8 +18,6 @@ import kotlinx.android.synthetic.main.photo_picker_activity.*
 import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
 import kotlinx.android.synthetic.main.photo_picker_title_button.view.*
 import kotlinx.android.synthetic.main.photo_picker_top_bar.view.*
-import java.io.File
-import java.util.regex.Pattern
 
 class PhotoPickerActivity: AppCompatActivity() {
 
@@ -216,8 +212,6 @@ class PhotoPickerActivity: AppCompatActivity() {
         val selectedList = mutableListOf<Asset>()
 
         assetGridView.selectedAssetList.forEach {
-            // 重置，避免下次打开 activity 还有选中状态
-            it.order = -1
             selectedList.add(it)
         }
 
@@ -226,38 +220,13 @@ class PhotoPickerActivity: AppCompatActivity() {
             selectedList.sortBy { it.index }
         }
 
-        // 排序完成之后，转成 PickedAsset
         val isRawChecked = bottomBar.isRawChecked
+        val cacheDir = externalCacheDir.absolutePath
 
-        // 文件名包含其他字符，需转存一份，避免调用者出现编码问题，导致无法上传
-        val pattern = Pattern.compile("[^A-Za-z0-9_]")
-        val targetPathPrefix = "${externalCacheDir.absolutePath}${File.separator}${System.currentTimeMillis()}"
-
-        val result = selectedList.map {
-
-            var path = it.path
-
-            var fileName = URLUtil.guessFileName(it.path, null, null)
-            var extName = ""
-
-            val index = fileName.indexOf(".")
-            if (index > 0) {
-                extName = fileName.substring(index)
-                fileName = fileName.substring(0, index)
-            }
-
-            if (pattern.matcher(fileName).find()) {
-                val source = File(path)
-                path = "$targetPathPrefix${it.index}$extName"
-                source.copyTo(File(path), true)
-            }
-
-            PickedAsset(path, it.width, it.height, it.size, it.type == AssetType.VIDEO, isRawChecked)
-        }
-
-
-
-        callback.onSubmit(this, result)
+        callback.onSubmit(
+            this,
+            selectedList.map { PickedAsset.build(it, isRawChecked, cacheDir) }
+        )
 
     }
 
