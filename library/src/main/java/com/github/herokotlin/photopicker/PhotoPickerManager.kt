@@ -207,7 +207,7 @@ object PhotoPickerManager {
         }
 
         if (includeMediaTypes.count() > 0) {
-            val item = includeMediaTypes.map {"${PhotoPickerConstant.FIELD_MEDIA_TYPE} == $it" }
+            val item = includeMediaTypes.map {"${PhotoPickerConstant.FIELD_MEDIA_TYPE} = $it" }
             list.add(item.joinToString(" OR "))
         }
         else if (excludeMediaTypes.count() > 0) {
