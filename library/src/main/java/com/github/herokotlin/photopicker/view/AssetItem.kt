@@ -16,8 +16,6 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
 
     private val selectButton = view.selectButton
 
-    private val overlayView = view.overlayView
-
     private var pixelSize = 0
 
         set(value) {
@@ -43,15 +41,22 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
 
             field = value
 
-            selectButton.visibility = View.GONE
-            configuration.loadAsset(
-                itemView.thumbnailView,
-                value!!.path,
-                R.drawable.photo_picker_asset_thumbnail_loading_placeholder,
-                R.drawable.photo_picker_asset_thumbnail_error_placeholder
-            ) {
-                if (it) {
-                    selectButton.visibility = View.VISIBLE
+            value?.let {
+
+                val selectable = it.selectable
+                if (selectable) {
+                    selectButton.visibility = View.GONE
+                }
+
+                configuration.loadAsset(
+                    itemView.thumbnailView,
+                    it.path,
+                    R.drawable.photo_picker_asset_thumbnail_loading_placeholder,
+                    R.drawable.photo_picker_asset_thumbnail_error_placeholder
+                ) {
+                    if (it && selectable) {
+                        selectButton.visibility = View.VISIBLE
+                    }
                 }
             }
 
@@ -66,38 +71,26 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
 
             field = value
 
-            selectButton.checked = asset!!.order >= 0
-            selectButton.order = if (configuration.countable && asset!!.order >= 0) asset!!.order + 1 else -1
-
-        }
-
-    private var selectable = false
-
-        set(value) {
-
-            if (field == value) {
-                return
+            asset?.let {
+                selectButton.checked = it.order >= 0
+                selectButton.order = if (configuration.countable && it.order >= 0) it.order + 1 else -1
             }
 
-            field = value
-
-            overlayView.visibility = if (value) View.GONE else View.VISIBLE
 
         }
 
     init {
         selectButton.countable = configuration.countable
 
-        // overlayView 如果是透明色，点击会穿透
         selectButton.setOnClickListener {
-            if (selectable) {
-                onToggleChecked.invoke(asset!!)
+            asset?.let {
+                onToggleChecked.invoke(it)
             }
         }
 
         view.setOnClickListener {
-            if (selectable) {
-                onClick.invoke(asset!!)
+            asset?.let {
+                onClick.invoke(it)
             }
         }
     }
@@ -128,7 +121,13 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
         }
 
         checked = asset.order >= 0
-        selectable = asset.selectable
+
+        selectButton.visibility = if (asset.selectable) {
+            View.VISIBLE
+        }
+        else {
+            View.GONE
+        }
 
     }
 

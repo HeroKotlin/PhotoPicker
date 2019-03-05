@@ -129,17 +129,45 @@ class AssetGrid: FrameLayout {
 
     }
 
-    private fun toggleChecked(asset: Asset) {
+    private fun toggleSingleChecked(asset: Asset) {
 
         // checked 获取反选值
         val checked = asset.order < 0
         val selectedCount = selectedAssetList.count()
 
+        if (selectedCount == 1) {
+            val selectedAsset = selectedAssetList[0]
+            selectedAsset.order = -1
+            selectedAssetList.remove(selectedAsset)
+            // 如果只是点击取消选择，要触发回调
+            // 否则跟下面那段一起触发回调
+            if (!checked) {
+                onSelectedAssetListChange?.invoke()
+            }
+            adapter?.notifyItemChanged(selectedAsset.index)
+        }
+
+        if (checked) {
+            asset.order = 0
+            selectedAssetList.add(asset)
+            onSelectedAssetListChange?.invoke()
+            adapter?.notifyItemChanged(asset.index)
+        }
+
+    }
+
+    private fun toggleMultiChecked(asset: Asset) {
+
+        // checked 获取反选值
+        val checked = asset.order < 0
+        val selectedCount = selectedAssetList.count()
+        val maxSelectCount = configuration.maxSelectCount
+
         if (checked) {
 
             // 因为有动画，用户可能在动画过程中快速点击了新的照片
             // 这里应该忽略
-            if (selectedCount == configuration.maxSelectCount) {
+            if (selectedCount == maxSelectCount) {
                 return
             }
 
@@ -148,7 +176,7 @@ class AssetGrid: FrameLayout {
             onSelectedAssetListChange?.invoke()
 
             // 到达最大值，就无法再选了
-            if (selectedCount + 1 == configuration.maxSelectCount) {
+            if (selectedCount + 1 == maxSelectCount) {
                 adapter?.notifyDataSetChanged()
             }
             else {
@@ -158,7 +186,7 @@ class AssetGrid: FrameLayout {
         }
         else {
 
-            selectedAssetList.removeAt(asset.order)
+            selectedAssetList.remove(asset)
             onSelectedAssetListChange?.invoke()
 
             asset.order = -1
@@ -176,7 +204,7 @@ class AssetGrid: FrameLayout {
             }
 
             // 上个状态是到达上限
-            if (selectedCount == configuration.maxSelectCount) {
+            if (selectedCount == maxSelectCount) {
                 adapter?.notifyDataSetChanged()
             }
             else {
@@ -205,6 +233,10 @@ class AssetGrid: FrameLayout {
             asset.selectable = if (asset.order >= 0) {
                 true
             }
+            // 单选总是可选
+            else if (configuration.maxSelectCount == 1) {
+                true
+            }
             else {
                 selectedAssetList.count() < configuration.maxSelectCount
             }
@@ -222,7 +254,12 @@ class AssetGrid: FrameLayout {
                     onAssetClick?.invoke(it)
                 },
                 {
-                    toggleChecked(it)
+                    if (configuration.maxSelectCount > 1) {
+                        toggleMultiChecked(it)
+                    }
+                    else {
+                        toggleSingleChecked(it)
+                    }
                 }
             )
         }
