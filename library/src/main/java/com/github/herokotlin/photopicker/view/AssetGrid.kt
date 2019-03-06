@@ -29,6 +29,11 @@ class AssetGrid: FrameLayout {
                 return
             }
 
+            if (value.count() > 0 && spinnerView.visibility == View.VISIBLE) {
+                spinnerView.visibility = View.GONE
+                gridView.visibility = View.VISIBLE
+            }
+
             field = value
 
             if (selectedAssetList.count() > 0) {
@@ -42,7 +47,7 @@ class AssetGrid: FrameLayout {
                 onSelectedAssetListChange?.invoke()
             }
 
-            adapter?.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
 
         }
 
@@ -50,7 +55,7 @@ class AssetGrid: FrameLayout {
 
     private lateinit var configuration: PhotoPickerConfiguration
 
-    private var adapter: PhotoGridAdapter? = null
+    private lateinit var adapter: PhotoGridAdapter
 
     private var cellSize = 0
 
@@ -122,7 +127,7 @@ class AssetGrid: FrameLayout {
             this.cellPixelSize = cellPixelSize
 
             if (cellPixelSize > 0) {
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
 
         }
@@ -144,14 +149,14 @@ class AssetGrid: FrameLayout {
             if (!checked) {
                 onSelectedAssetListChange?.invoke()
             }
-            adapter?.notifyItemChanged(selectedAsset.index)
+            adapter.notifyItemChanged(selectedAsset.index)
         }
 
         if (checked) {
             asset.order = 0
             selectedAssetList.add(asset)
             onSelectedAssetListChange?.invoke()
-            adapter?.notifyItemChanged(asset.index)
+            adapter.notifyItemChanged(asset.index)
         }
 
     }
@@ -177,10 +182,10 @@ class AssetGrid: FrameLayout {
 
             // 到达最大值，就无法再选了
             if (selectedCount + 1 == maxSelectCount) {
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
             else {
-                adapter?.notifyItemChanged(asset.index)
+                adapter.notifyItemChanged(asset.index)
             }
 
         }
@@ -205,11 +210,11 @@ class AssetGrid: FrameLayout {
 
             // 上个状态是到达上限
             if (selectedCount == maxSelectCount) {
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
             else {
                 changes.forEach {
-                    adapter?.notifyItemChanged(it)
+                    adapter.notifyItemChanged(it)
                 }
             }
 

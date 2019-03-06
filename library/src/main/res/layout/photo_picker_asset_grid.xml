@@ -9,4 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <ProgressBar
+        android:id="@+id/spinnerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/photo_picker_submit_button_bg_color_normal"
+        android:indeterminateTintMode="src_atop"/>
+
 </FrameLayout>
