@@ -221,11 +221,10 @@ class PhotoPickerActivity: AppCompatActivity() {
         }
 
         val isRawChecked = bottomBar.isRawChecked
-        val cacheDir = externalCacheDir.absolutePath
 
         callback.onSubmit(
             this,
-            selectedList.map { PickedAsset.build(it, isRawChecked, cacheDir) }
+            selectedList.map { PickedAsset.build(it, isRawChecked) }
         )
 
     }
