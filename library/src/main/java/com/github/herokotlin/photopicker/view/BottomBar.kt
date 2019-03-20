@@ -58,7 +58,12 @@ internal class BottomBar: RelativeLayout {
         }
 
     private val submitButtonTitle: String by lazy {
-        resources.getString(R.string.photo_picker_submit_button_title)
+        if (configuration.submitButtonTitle.isEmpty()) {
+            resources.getString(R.string.photo_picker_submit_button_title)
+        }
+        else {
+            configuration.submitButtonTitle
+        }
     }
 
     constructor(context: Context) : super(context) {

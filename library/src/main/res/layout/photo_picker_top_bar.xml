@@ -8,15 +8,18 @@
 
     <Button
             android:id="@+id/cancelButton"
-            android:layout_width="@dimen/photo_picker_cancel_button_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/photo_picker_cancel_button_height"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/photo_picker_cancel_button_text_size"
+            android:textColor="@color/photo_picker_cancel_button_text_color"
             android:text="@string/photo_picker_cancel_button_title"
-            android:textSize="@dimen/photo_picker_cancel_button_title_text_size"
-            android:textColor="@color/photo_picker_cancel_button_title_text_color"
+            android:textAllCaps="false"
             android:padding="0dp"
-            android:minWidth="0dp"
+            android:minWidth="@dimen/photo_picker_cancel_button_min_width"
             android:minHeight="0dp"
             android:background="@android:color/transparent"
             style="?android:attr/borderlessButtonStyle"/>

@@ -9,6 +9,20 @@ import kotlinx.android.synthetic.main.photo_picker_raw_button.view.*
 
 internal class RawButton: LinearLayout {
 
+    var text = ""
+
+        set(value) {
+
+            if (field == value) {
+                return
+            }
+
+            field = value
+
+            titleView.text = value
+
+        }
+
     var image = 0
 
         set(value) {

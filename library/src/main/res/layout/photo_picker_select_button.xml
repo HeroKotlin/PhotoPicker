@@ -23,8 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="@dimen/photo_picker_select_button_title_text_size"
-                android:textColor="@color/photo_picker_select_button_title_text_color"
+                android:textSize="@dimen/photo_picker_select_button_text_size"
+                android:textColor="@color/photo_picker_select_button_text_color"
                 android:visibility="gone"
                 tools:text="9"/>
 

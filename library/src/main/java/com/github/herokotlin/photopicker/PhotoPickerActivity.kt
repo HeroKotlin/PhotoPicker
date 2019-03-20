@@ -110,6 +110,9 @@ class PhotoPickerActivity: AppCompatActivity() {
             }
         }
 
+        if (configuration.cancelButtonTitle.isNotEmpty()) {
+            topBar.cancelButton.text = configuration.cancelButtonTitle
+        }
         topBar.cancelButton.setOnClickListener {
             callback.onCancel(this)
         }
@@ -118,6 +121,9 @@ class PhotoPickerActivity: AppCompatActivity() {
             toggleAlbumList()
         }
 
+        if (configuration.submitButtonTitle.isNotEmpty()) {
+            bottomBar.submitButton.text = configuration.submitButtonTitle
+        }
         bottomBar.configuration = configuration
         bottomBar.submitButton.setOnClickListener {
             submit()
@@ -125,6 +131,9 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         if (!configuration.rawButtonVisible) {
             bottomBar.rawButton.visibility = View.GONE
+        }
+        else if (configuration.rawButtonTitle.isNotEmpty()) {
+            bottomBar.rawButton.text = configuration.rawButtonTitle
         }
 
     }

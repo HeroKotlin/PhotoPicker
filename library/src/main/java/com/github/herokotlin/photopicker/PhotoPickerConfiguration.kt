@@ -76,6 +76,13 @@ abstract class PhotoPickerConfiguration {
     var allPhotosAlbumTitle = "所有照片"
 
     /**
+     * 提供动态修改标题文字的方式
+     */
+    var cancelButtonTitle = ""
+    var rawButtonTitle = ""
+    var submitButtonTitle = ""
+
+    /**
      * 请求权限
      */
     abstract fun requestPermissions(activity: Activity, permissions: List<String>, requestCode: Int): Boolean

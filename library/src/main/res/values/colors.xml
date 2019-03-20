@@ -11,23 +11,21 @@
 
     <color name="photo_picker_album_count_text_color">#99999999</color>
 
-    <color name="photo_picker_select_button_title_text_color">#FFF</color>
-
-    <color name="photo_picker_asset_overlay_color">#99FFFFFF</color>
+    <color name="photo_picker_select_button_text_color">#FFF</color>
 
     <color name="photo_picker_top_bar_bg_color">#FFF</color>
     <color name="photo_picker_top_bar_border_color">#CCC</color>
 
     <color name="photo_picker_bottom_bar_bg_color">#262C32</color>
 
-    <color name="photo_picker_raw_button_title_text_color">#FFF</color>
+    <color name="photo_picker_raw_button_text_color">#FFF</color>
 
     <color name="photo_picker_submit_button_bg_color_normal">#FF9C00</color>
     <color name="photo_picker_submit_button_bg_color_pressed">#FF7A07</color>
-    <color name="photo_picker_submit_button_title_text_color">#FFF</color>
+    <color name="photo_picker_submit_button_text_color">#FFF</color>
 
-    <color name="photo_picker_title_button_title_text_color">#666</color>
+    <color name="photo_picker_title_button_text_color">#666</color>
 
-    <color name="photo_picker_cancel_button_title_text_color">#666</color>
+    <color name="photo_picker_cancel_button_text_color">#666</color>
 
 </resources>

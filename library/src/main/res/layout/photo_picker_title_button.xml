@@ -16,8 +16,8 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:maxWidth="150dp"
-            android:textSize="@dimen/photo_picker_title_button_title_text_size"
-            android:textColor="@color/photo_picker_title_button_title_text_color"
+            android:textSize="@dimen/photo_picker_title_button_text_size"
+            android:textColor="@color/photo_picker_title_button_text_color"
             tools:text="所有照片所有照片所有照片所有照片"/>
 
     <ImageView

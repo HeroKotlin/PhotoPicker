@@ -21,8 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/photo_picker_raw_button_title_margin_left"
-            android:textSize="@dimen/photo_picker_raw_button_title_text_size"
-            android:textColor="@color/photo_picker_raw_button_title_text_color"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/photo_picker_raw_button_text_size"
+            android:textColor="@color/photo_picker_raw_button_text_color"
             android:text="@string/photo_picker_raw_button_title"/>
 
 </LinearLayout>
