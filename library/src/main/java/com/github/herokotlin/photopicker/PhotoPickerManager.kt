@@ -1,7 +1,6 @@
 package com.github.herokotlin.photopicker
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.*
 import android.provider.MediaStore
 import com.github.herokotlin.photopicker.model.Album
@@ -10,20 +9,6 @@ import java.io.File
 import java.util.*
 
 object PhotoPickerManager {
-
-    private const val PERMISSION_REQUEST_CODE = 12321
-
-    lateinit var onRequestPermissions: (List<String>, Int) -> Boolean
-
-    var onPermissionsGranted: (() -> Unit)? = null
-
-    var onPermissionsDenied: (() -> Unit)? = null
-
-    var onFetchWithoutPermissions: (() -> Unit)? = null
-
-    var onFetchWithoutExternalStorage: (() -> Unit)? = null
-
-    private lateinit var onRequestPermissionsComplete: () -> Unit
 
     private lateinit var onScanComplete: () -> Unit
 
@@ -135,45 +120,6 @@ object PhotoPickerManager {
             return allAlbums[album]!!
         }
         return allPhotos
-    }
-
-    fun requestPermissions(callback: () -> Unit) {
-
-        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
-            onFetchWithoutExternalStorage?.invoke()
-            return
-        }
-
-        onRequestPermissionsComplete = callback
-
-        if (onRequestPermissions(
-                listOf(
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                PERMISSION_REQUEST_CODE
-            )
-        ) {
-            callback()
-        }
-
-    }
-
-    fun requestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-
-        if (requestCode != PERMISSION_REQUEST_CODE) {
-            return
-        }
-
-        for (i in 0 until permissions.size) {
-            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                onPermissionsDenied?.invoke()
-                return
-            }
-        }
-
-        onPermissionsGranted?.invoke()
-        onRequestPermissionsComplete()
-
     }
 
     private fun getAlbumName(path: String): String {

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
+import com.github.herokotlin.permission.Permission
 import com.github.herokotlin.photopicker.model.Album
 import com.github.herokotlin.photopicker.model.Asset
 import com.github.herokotlin.photopicker.model.PickedAsset
@@ -67,6 +68,8 @@ class PhotoPickerActivity: AppCompatActivity() {
     private var rotateAnimation: RotateAnimation? = null
     private var translateAnimation: ValueAnimator? = null
 
+    private val permission = Permission(89190903, listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -85,27 +88,25 @@ class PhotoPickerActivity: AppCompatActivity() {
             toggleAlbumList()
         }
 
-        PhotoPickerManager.onPermissionsGranted = {
+        permission.onPermissionsGranted = {
             callback.onPermissionsGranted(this)
         }
-        PhotoPickerManager.onPermissionsDenied = {
+        permission.onPermissionsDenied = {
             callback.onPermissionsDenied(this)
         }
-        PhotoPickerManager.onFetchWithoutPermissions = {
-            callback.onFetchWithoutPermissions(this)
+        permission.onPermissionsNotGranted = {
+            callback.onPermissionsNotGranted(this)
         }
-        PhotoPickerManager.onFetchWithoutExternalStorage = {
-            callback.onFetchWithoutExternalStorage(this)
+        permission.onExternalStorageNotWritable = {
+            callback.onExternalStorageNotWritable(this)
         }
-        PhotoPickerManager.onRequestPermissions = { permissions, requestCode ->
-            configuration.requestPermissions(this, permissions, requestCode)
-        }
-
-        PhotoPickerManager.requestPermissions {
-            PhotoPickerManager.scan(this, configuration) {
-                val albumList = PhotoPickerManager.fetchAlbumList(configuration)
-                albumListView.albumList = albumList
-                currentAlbum = if (albumList.count() > 0) albumList[0] else null
+        if (permission.checkExternalStorageWritable()) {
+            permission.requestPermissions(this) {
+                PhotoPickerManager.scan(this, configuration) {
+                    val albumList = PhotoPickerManager.fetchAlbumList(configuration)
+                    albumListView.albumList = albumList
+                    currentAlbum = if (albumList.count() > 0) albumList[0] else null
+                }
             }
         }
 
@@ -231,7 +232,7 @@ class PhotoPickerActivity: AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        PhotoPickerManager.requestPermissionsResult(requestCode, permissions, grantResults)
+        permission.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 }
