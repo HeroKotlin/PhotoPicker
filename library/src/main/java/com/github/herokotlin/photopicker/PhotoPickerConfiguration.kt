@@ -1,6 +1,5 @@
 package com.github.herokotlin.photopicker
 
-import android.app.Activity
 import android.widget.ImageView
 import com.github.herokotlin.photopicker.enum.AssetType
 import com.github.herokotlin.photopicker.model.Album
@@ -81,11 +80,6 @@ abstract class PhotoPickerConfiguration {
     var cancelButtonTitle = ""
     var rawButtonTitle = ""
     var submitButtonTitle = ""
-
-    /**
-     * 请求权限
-     */
-    abstract fun requestPermissions(activity: Activity, permissions: List<String>, requestCode: Int): Boolean
 
     /**
      * 加载图片
