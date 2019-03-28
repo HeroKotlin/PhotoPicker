@@ -68,7 +68,7 @@ class PhotoPickerActivity: AppCompatActivity() {
     private var rotateAnimation: RotateAnimation? = null
     private var translateAnimation: ValueAnimator? = null
 
-    private val permission = Permission(190903, listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
+    private val permission = Permission(19903, listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
