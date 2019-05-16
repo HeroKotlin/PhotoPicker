@@ -103,7 +103,12 @@ abstract class PhotoPickerConfiguration {
      * 过滤图片
      */
     open fun filter(asset: Asset): Boolean {
-        if (asset.type != AssetType.VIDEO) {
+        // 安卓某些手机读出来的图片尺寸是 0，但实际上图片是大于 0 的
+        // 为了兼容这种系统级的错误，必须先判断图片尺寸大于 0
+        if (asset.type != AssetType.VIDEO
+            && asset.width > 0
+            && asset.height > 0
+        ) {
             return asset.width > imageMinWidth && asset.height > imageMinHeight
         }
         return true
