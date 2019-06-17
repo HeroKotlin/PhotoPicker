@@ -111,7 +111,7 @@ abstract class PhotoPickerConfiguration {
         ) {
             return asset.width > imageMinWidth && asset.height > imageMinHeight
         }
-        return true
+        return false
     }
 
 }
