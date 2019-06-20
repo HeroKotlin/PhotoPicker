@@ -28,6 +28,8 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         lateinit var configuration: PhotoPickerConfiguration
 
+        val permission = Permission(19903, listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
+
         fun newInstance(context: Activity) {
             val intent = Intent(context, PhotoPickerActivity::class.java)
             context.startActivity(intent)
@@ -67,8 +69,6 @@ class PhotoPickerActivity: AppCompatActivity() {
 
     private var rotateAnimation: RotateAnimation? = null
     private var translateAnimation: ValueAnimator? = null
-
-    val permission = Permission(19903, listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -223,11 +223,6 @@ class PhotoPickerActivity: AppCompatActivity() {
             selectedList.map { PickedAsset.build(it, isRawChecked) }
         )
 
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        permission.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 }
