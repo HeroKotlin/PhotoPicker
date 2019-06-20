@@ -68,7 +68,7 @@ class PhotoPickerActivity: AppCompatActivity() {
     private var rotateAnimation: RotateAnimation? = null
     private var translateAnimation: ValueAnimator? = null
 
-    private val permission = Permission(19903, listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
+    val permission = Permission(19903, listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -86,28 +86,6 @@ class PhotoPickerActivity: AppCompatActivity() {
         albumListView.onAlbumClick = {
             currentAlbum = it
             toggleAlbumList()
-        }
-
-        permission.onPermissionsGranted = {
-            callback.onPermissionsGranted(this)
-        }
-        permission.onPermissionsDenied = {
-            callback.onPermissionsDenied(this)
-        }
-        permission.onPermissionsNotGranted = {
-            callback.onPermissionsNotGranted(this)
-        }
-        permission.onExternalStorageNotWritable = {
-            callback.onExternalStorageNotWritable(this)
-        }
-        if (permission.checkExternalStorageWritable()) {
-            permission.requestPermissions(this) {
-                PhotoPickerManager.scan(this, configuration) {
-                    val albumList = PhotoPickerManager.fetchAlbumList(configuration)
-                    albumListView.albumList = albumList
-                    currentAlbum = if (albumList.count() > 0) albumList[0] else null
-                }
-            }
         }
 
         if (configuration.cancelButtonTitle.isNotEmpty()) {
@@ -134,6 +112,14 @@ class PhotoPickerActivity: AppCompatActivity() {
         }
         else if (configuration.rawButtonTitle.isNotEmpty()) {
             bottomBar.rawButton.text = configuration.rawButtonTitle
+        }
+
+        // 用 permission 属性在外面获取完权限再进来吧
+        // 否则没权限一片漆黑，体验极差
+        PhotoPickerManager.scan(this, configuration) {
+            val albumList = PhotoPickerManager.fetchAlbumList(configuration)
+            albumListView.albumList = albumList
+            currentAlbum = if (albumList.count() > 0) albumList[0] else null
         }
 
     }

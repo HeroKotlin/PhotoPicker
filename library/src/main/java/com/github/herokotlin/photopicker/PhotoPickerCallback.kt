@@ -9,20 +9,4 @@ interface PhotoPickerCallback {
 
     fun onSubmit(activity: Activity, assetList: List<PickedAsset>)
 
-    fun onPermissionsGranted(activity: Activity) {
-
-    }
-
-    fun onPermissionsDenied(activity: Activity) {
-
-    }
-
-    fun onPermissionsNotGranted(activity: Activity) {
-
-    }
-
-    fun onExternalStorageNotWritable(activity: Activity) {
-
-    }
-
 }
