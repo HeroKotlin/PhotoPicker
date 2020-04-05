@@ -11,7 +11,6 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
-import com.github.herokotlin.permission.Permission
 import com.github.herokotlin.photopicker.model.Album
 import com.github.herokotlin.photopicker.model.Asset
 import com.github.herokotlin.photopicker.model.PickedAsset
@@ -28,7 +27,7 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         lateinit var configuration: PhotoPickerConfiguration
 
-        val permission = Permission(19903, listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
+
 
         fun newInstance(context: Activity) {
             val intent = Intent(context, PhotoPickerActivity::class.java)
