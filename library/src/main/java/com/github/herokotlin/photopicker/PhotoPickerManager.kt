@@ -39,16 +39,18 @@ object PhotoPickerManager {
 
             val contentProvider = context.contentResolver
 
+            val query = getQuery(
+                configuration.assetMinSize,
+                configuration.assetMaxSize,
+                configuration.includeAssetMediaTypes,
+                configuration.excludeAssetMediaTypes
+            )
+
             val cursor = contentProvider.query(
                 MediaStore.Files.getContentUri("external"),
                 PhotoPickerConstant.FILE_FIELDS,
-                getSelection(
-                    configuration.assetMinSize,
-                    configuration.assetMaxSize,
-                    configuration.includeAssetMediaTypes,
-                    configuration.excludeAssetMediaTypes
-                ),
-                null,
+                query.where,
+                query.args.toTypedArray(),
                 configuration.assetSortField + " " + if (configuration.assetSortAscending) "ASC" else "DESC"
             )
 
@@ -131,42 +133,60 @@ object PhotoPickerManager {
         return ""
     }
 
-    private fun getSelection(minSize: Int, maxSize: Int, includeMediaTypes: List<Int>, excludeMediaTypes: List<Int>): String? {
+    private fun getQuery(minSize: Int, maxSize: Int, includeMediaTypes: List<Int>, excludeMediaTypes: List<Int>): Query {
 
-        val list = mutableListOf<String>()
+        val args = mutableListOf<String>()
+        val where = mutableListOf<String>()
 
         val sizeList = mutableListOf<String>()
         if (minSize > 0) {
+            args.add(minSize.toString())
             sizeList.add(
-                "${PhotoPickerConstant.FIELD_SIZE} >= $minSize"
+                "${PhotoPickerConstant.FIELD_SIZE} >= ?"
             )
         }
         if (maxSize > 0) {
+            args.add(maxSize.toString())
             sizeList.add(
-                "${PhotoPickerConstant.FIELD_SIZE} <= $maxSize"
+                "${PhotoPickerConstant.FIELD_SIZE} <= ?"
             )
         }
         if (sizeList.count() > 0) {
-            list.add(
+            where.add(
                 sizeList.joinToString(" AND ")
             )
         }
 
         if (includeMediaTypes.count() > 0) {
-            val item = includeMediaTypes.map {"${PhotoPickerConstant.FIELD_MEDIA_TYPE} = $it" }
-            list.add(item.joinToString(" OR "))
+            val item = includeMediaTypes.map {
+                args.add(it.toString())
+                "${PhotoPickerConstant.FIELD_MEDIA_TYPE} = ?"
+            }
+            where.add(item.joinToString(" OR "))
         }
         else if (excludeMediaTypes.count() > 0) {
-            val item = excludeMediaTypes.map {"${PhotoPickerConstant.FIELD_MEDIA_TYPE} != $it" }
-            list.add(item.joinToString(" AND "))
+            val item = excludeMediaTypes.map {
+                args.add(it.toString())
+                "${PhotoPickerConstant.FIELD_MEDIA_TYPE} != ?"
+            }
+            where.add(item.joinToString(" AND "))
         }
 
-        if (list.count() > 0) {
-            return list.joinToString(" AND ")
+        var whereStr = ""
+
+        val count = where.count()
+        if (count > 0) {
+            whereStr = if (count > 1) {
+                where.joinToString(" AND ") { "($it)" }
+            } else {
+                where[0]
+            }
         }
 
-        return null
+        return Query(whereStr, args)
 
     }
+
+    private class Query(val where: String, val args: List<String>)
 
 }
