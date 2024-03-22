@@ -28,10 +28,7 @@ data class PickedAsset(
                 val bitmap = BitmapFactory.decodeFile(asset.path)
                 val output = ByteArrayOutputStream()
 
-                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                    MimeTypeMap.getFileExtensionFromUrl(asset.path)
-                )
-                if (mimeType == "image/png") {
+                if (bitmap.hasAlpha()) {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
                 } else {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
