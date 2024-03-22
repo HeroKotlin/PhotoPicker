@@ -76,7 +76,7 @@ object PhotoPickerManager {
                     allPhotos.add(photo)
 
                     val albumName = getAlbumName(photo.path)
-                    if (!albumName.isEmpty()) {
+                    if (albumName.isNotEmpty()) {
                         if (!allAlbums.contains(albumName)) {
                             allAlbums[albumName] = mutableListOf()
                         }

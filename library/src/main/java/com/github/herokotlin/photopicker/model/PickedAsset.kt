@@ -21,22 +21,27 @@ data class PickedAsset(
 
         fun build(asset: Asset, isRawChecked: Boolean): PickedAsset {
 
-            // 获取 base64
-            val bitmap = BitmapFactory.decodeFile(asset.path)
-            val output = ByteArrayOutputStream()
-
             val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
                 MimeTypeMap.getFileExtensionFromUrl(asset.path)
             )
-            if (mimeType == "image/png") {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
-            }
-            else {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
-            }
 
-            val base64 = Base64.encodeToString(output.toByteArray(), Base64.DEFAULT)
-            output.close()
+            var base64 = ""
+
+            // 是图片要获取 base64
+            if (mimeType.contains("image", true)) {
+                val bitmap = BitmapFactory.decodeFile(asset.path)
+                val output = ByteArrayOutputStream()
+
+                if (mimeType == "image/png") {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
+                }
+                else {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
+                }
+
+                base64 = Base64.encodeToString(output.toByteArray(), Base64.DEFAULT)
+                output.close()
+            }
 
             return PickedAsset(asset.path, asset.name, base64, asset.width, asset.height, asset.size, asset.type == AssetType.VIDEO, isRawChecked)
         }
