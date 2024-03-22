@@ -3,6 +3,7 @@ package com.github.herokotlin.photopicker.model
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.webkit.MimeTypeMap
 import com.github.herokotlin.photopicker.enum.AssetType
 import java.io.ByteArrayOutputStream
 
@@ -19,10 +20,21 @@ data class PickedAsset(
     companion object {
 
         fun build(asset: Asset, isRawChecked: Boolean): PickedAsset {
+
             // 获取 base64
             val bitmap = BitmapFactory.decodeFile(asset.path)
             val output = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
+
+            val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+                MimeTypeMap.getFileExtensionFromUrl(asset.path)
+            )
+            if (mimeType == "image/png") {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
+            }
+            else {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
+            }
+
             val base64 = Base64.encodeToString(output.toByteArray(), Base64.DEFAULT)
             output.close()
 
