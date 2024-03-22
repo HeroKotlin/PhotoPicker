@@ -21,21 +21,19 @@ data class PickedAsset(
 
         fun build(asset: Asset, isRawChecked: Boolean): PickedAsset {
 
-            val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                MimeTypeMap.getFileExtensionFromUrl(asset.path)
-            )
-
             var base64 = ""
 
             // 是图片要获取 base64
-            if (mimeType.contains("image", true)) {
+            if (asset.type != AssetType.VIDEO) {
                 val bitmap = BitmapFactory.decodeFile(asset.path)
                 val output = ByteArrayOutputStream()
 
+                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+                    MimeTypeMap.getFileExtensionFromUrl(asset.path)
+                )
                 if (mimeType == "image/png") {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
-                }
-                else {
+                } else {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
                 }
 
