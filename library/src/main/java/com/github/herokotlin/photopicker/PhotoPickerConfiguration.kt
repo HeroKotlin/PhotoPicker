@@ -33,6 +33,11 @@ abstract class PhotoPickerConfiguration {
     var showOriginalButton = true
 
     /**
+     * 是否需要返回 base64 图片
+     */
+    var imageBase64Enabled = true
+
+    /**
      * 网格每行多少个
      */
     var assetGirdSpanCount = 3

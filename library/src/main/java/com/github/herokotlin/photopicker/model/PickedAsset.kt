@@ -19,12 +19,12 @@ data class PickedAsset(
 ) {
     companion object {
 
-        fun build(asset: Asset, isOriginalChecked: Boolean): PickedAsset {
+        fun build(asset: Asset, isOriginalChecked: Boolean, imageBase64Enabled: Boolean): PickedAsset {
 
             var base64 = ""
 
             // 是图片要获取 base64
-            if (asset.type != AssetType.VIDEO) {
+            if (asset.type != AssetType.VIDEO && imageBase64Enabled) {
                 val bitmap = BitmapFactory.decodeFile(asset.path)
                 val output = ByteArrayOutputStream()
 

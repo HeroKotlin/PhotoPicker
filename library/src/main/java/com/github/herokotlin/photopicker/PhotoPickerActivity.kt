@@ -213,11 +213,9 @@ class PhotoPickerActivity: AppCompatActivity() {
             selectedList.sortBy { it.index }
         }
 
-        val isOriginalChecked = bottomBar.isOriginalChecked
-
         callback.onSubmit(
             this,
-            selectedList.map { PickedAsset.build(it, isOriginalChecked) }
+            selectedList.map { PickedAsset.build(it, bottomBar.isOriginalChecked, configuration.imageBase64Enabled) }
         )
 
     }
