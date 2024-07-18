@@ -44,10 +44,10 @@
     <dimen name="photo_picker_cancel_button_text_size">16dp</dimen>
 
 
-    <dimen name="photo_picker_raw_button_padding_horizontal">8dp</dimen>
-    <dimen name="photo_picker_raw_button_padding_vertical">8dp</dimen>
-    <dimen name="photo_picker_raw_button_text_size">13dp</dimen>
-    <dimen name="photo_picker_raw_button_title_margin_left">6dp</dimen>
+    <dimen name="photo_picker_original_button_padding_horizontal">8dp</dimen>
+    <dimen name="photo_picker_original_button_padding_vertical">8dp</dimen>
+    <dimen name="photo_picker_original_button_text_size">13dp</dimen>
+    <dimen name="photo_picker_original_button_title_margin_left">6dp</dimen>
 
     <dimen name="photo_picker_submit_button_width">66dp</dimen>
     <dimen name="photo_picker_submit_button_height">30dp</dimen>

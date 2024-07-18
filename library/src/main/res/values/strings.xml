@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="photo_picker_raw_button_title">原图</string>
+    <string name="photo_picker_original_button_title">原图</string>
     <string name="photo_picker_submit_button_title">确定</string>
     <string name="photo_picker_cancel_button_title">取消</string>
 </resources>

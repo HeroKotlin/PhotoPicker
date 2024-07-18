@@ -15,11 +15,11 @@ data class PickedAsset(
     val height: Int,
     val size: Int,
     val isVideo: Boolean,
-    val isRaw: Boolean
+    val isOriginal: Boolean
 ) {
     companion object {
 
-        fun build(asset: Asset, isRawChecked: Boolean): PickedAsset {
+        fun build(asset: Asset, isOriginalChecked: Boolean): PickedAsset {
 
             var base64 = ""
 
@@ -38,7 +38,7 @@ data class PickedAsset(
                 output.close()
             }
 
-            return PickedAsset(asset.path, asset.name, base64, asset.width, asset.height, asset.size, asset.type == AssetType.VIDEO, isRawChecked)
+            return PickedAsset(asset.path, asset.name, base64, asset.width, asset.height, asset.size, asset.type == AssetType.VIDEO, isOriginalChecked)
         }
 
     }

@@ -12,7 +12,7 @@ internal class BottomBar: RelativeLayout {
 
     lateinit var configuration: PhotoPickerConfiguration
 
-    var isRawChecked = false
+    var isOriginalChecked = false
 
         set(value) {
 
@@ -22,11 +22,11 @@ internal class BottomBar: RelativeLayout {
 
             field = value
 
-            rawButton.image = if (value) {
-                R.drawable.photo_picker_raw_button_checked
+            originalButton.image = if (value) {
+                R.drawable.photo_picker_original_button_checked
             }
             else {
-                R.drawable.photo_picker_raw_button_unchecked
+                R.drawable.photo_picker_original_button_unchecked
             }
 
         }
@@ -82,8 +82,8 @@ internal class BottomBar: RelativeLayout {
 
         LayoutInflater.from(context).inflate(R.layout.photo_picker_bottom_bar, this)
 
-        rawButton.setOnClickListener {
-            isRawChecked = !isRawChecked
+        originalButton.setOnClickListener {
+            isOriginalChecked = !isOriginalChecked
         }
 
     }

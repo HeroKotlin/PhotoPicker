@@ -6,8 +6,8 @@
                 android:paddingRight="@dimen/photo_picker_bottom_bar_padding_horizontal"
                 android:background="@color/photo_picker_bottom_bar_bg_color">
 
-    <com.github.herokotlin.photopicker.view.RawButton
-            android:id="@+id/rawButton"
+    <com.github.herokotlin.photopicker.view.OriginalButton
+            android:id="@+id/originalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

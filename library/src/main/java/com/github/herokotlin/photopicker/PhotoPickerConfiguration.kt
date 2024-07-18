@@ -30,7 +30,7 @@ abstract class PhotoPickerConfiguration {
     /**
      * 是否显示原图按钮
      */
-    var rawButtonVisible = true
+    var showOriginalButton = true
 
     /**
      * 网格每行多少个
@@ -78,7 +78,7 @@ abstract class PhotoPickerConfiguration {
      * 提供动态修改标题文字的方式
      */
     var cancelButtonTitle = ""
-    var rawButtonTitle = ""
+    var originalButtonTitle = ""
     var submitButtonTitle = ""
 
     /**
@@ -90,7 +90,7 @@ abstract class PhotoPickerConfiguration {
      * 过滤相册
      */
     open fun filter(album: Album): Boolean {
-        if (album.assetList.count() == 0) {
+        if (album.assetList.isEmpty()) {
             return false
         }
         if (album.title.startsWith("drawable-")) {

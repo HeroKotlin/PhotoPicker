@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.github.herokotlin.photopicker.R
-import kotlinx.android.synthetic.main.photo_picker_raw_button.view.*
+import kotlinx.android.synthetic.main.photo_picker_original_button.view.*
 
-internal class RawButton: LinearLayout {
+internal class OriginalButton: LinearLayout {
 
     var text = ""
 
@@ -50,7 +50,7 @@ internal class RawButton: LinearLayout {
     }
 
     private fun init() {
-        LayoutInflater.from(context).inflate(R.layout.photo_picker_raw_button, this)
+        LayoutInflater.from(context).inflate(R.layout.photo_picker_original_button, this)
     }
 
 }

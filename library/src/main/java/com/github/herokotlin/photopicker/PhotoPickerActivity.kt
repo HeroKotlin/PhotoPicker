@@ -104,11 +104,11 @@ class PhotoPickerActivity: AppCompatActivity() {
             submit()
         }
 
-        if (!configuration.rawButtonVisible) {
-            bottomBar.rawButton.visibility = View.GONE
+        if (!configuration.showOriginalButton) {
+            bottomBar.originalButton.visibility = View.GONE
         }
-        else if (configuration.rawButtonTitle.isNotEmpty()) {
-            bottomBar.rawButton.text = configuration.rawButtonTitle
+        else if (configuration.originalButtonTitle.isNotEmpty()) {
+            bottomBar.originalButton.text = configuration.originalButtonTitle
         }
 
         // 用 permission 属性在外面获取完权限再进来吧
@@ -213,11 +213,11 @@ class PhotoPickerActivity: AppCompatActivity() {
             selectedList.sortBy { it.index }
         }
 
-        val isRawChecked = bottomBar.isRawChecked
+        val isOriginalChecked = bottomBar.isOriginalChecked
 
         callback.onSubmit(
             this,
-            selectedList.map { PickedAsset.build(it, isRawChecked) }
+            selectedList.map { PickedAsset.build(it, isOriginalChecked) }
         )
 
     }
