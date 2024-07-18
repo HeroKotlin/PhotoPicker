@@ -9,7 +9,7 @@ data class Album(
 
         fun build(title: String, assetList: List<Asset>): Album {
 
-            return Album(title, if (assetList.count() > 0) assetList[0] else null, assetList)
+            return Album(title, if (assetList.isNotEmpty()) assetList[0] else null, assetList)
 
         }
 

@@ -30,12 +30,12 @@ abstract class PhotoPickerConfiguration {
     /**
      * 是否显示原图按钮
      */
-    var showOriginalButton = true
+    var showOriginalButton = false
 
     /**
      * 是否需要返回 base64 图片
      */
-    var imageBase64Enabled = true
+    var imageBase64Enabled = false
 
     /**
      * 网格每行多少个

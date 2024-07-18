@@ -29,14 +29,14 @@ class AssetGrid: FrameLayout {
                 return
             }
 
-            if (value.count() > 0 && spinnerView.visibility == View.VISIBLE) {
+            if (value.isNotEmpty() && spinnerView.visibility == View.VISIBLE) {
                 spinnerView.visibility = View.GONE
                 gridView.visibility = View.VISIBLE
             }
 
             field = value
 
-            if (selectedAssetList.count() > 0) {
+            if (selectedAssetList.isNotEmpty()) {
                 // 安卓和 ios 的实现机制不一样
                 // 安卓会持续持有照片实例
                 // 因此当来回切换时，照片的选中状态还在，这里要重置一下

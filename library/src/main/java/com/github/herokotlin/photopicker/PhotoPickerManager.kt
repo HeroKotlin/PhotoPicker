@@ -151,20 +151,20 @@ object PhotoPickerManager {
                 "${PhotoPickerConstant.FIELD_SIZE} <= ?"
             )
         }
-        if (sizeList.count() > 0) {
+        if (sizeList.isNotEmpty()) {
             where.add(
                 sizeList.joinToString(" AND ")
             )
         }
 
-        if (includeMediaTypes.count() > 0) {
+        if (includeMediaTypes.isNotEmpty()) {
             val item = includeMediaTypes.map {
                 args.add(it.toString())
                 "${PhotoPickerConstant.FIELD_MEDIA_TYPE} = ?"
             }
             where.add(item.joinToString(" OR "))
         }
-        else if (excludeMediaTypes.count() > 0) {
+        else if (excludeMediaTypes.isNotEmpty()) {
             val item = excludeMediaTypes.map {
                 args.add(it.toString())
                 "${PhotoPickerConstant.FIELD_MEDIA_TYPE} != ?"
