@@ -215,7 +215,7 @@ class PhotoPickerActivity: AppCompatActivity() {
 
         callback.onSubmit(
             this,
-            selectedList.map { PickedAsset.build(it, bottomBar.isOriginalChecked, configuration.imageBase64Enabled) }
+            selectedList.map { PickedAsset.build(it, configuration, bottomBar.isOriginalChecked) }
         )
 
     }

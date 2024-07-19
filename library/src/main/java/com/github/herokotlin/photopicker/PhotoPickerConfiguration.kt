@@ -28,6 +28,16 @@ abstract class PhotoPickerConfiguration {
     var imageMinHeight = 0
 
     /**
+     * 图片的最大宽度，选中的图片如果超过此宽度，会进行压缩
+     */
+    var imageMaxWidth = 0
+
+    /**
+     * 图片的最大高度，选中的图片如果超过此高度，会进行压缩
+     */
+    var imageMaxHeight = 0
+
+    /**
      * 是否显示原图按钮
      */
     var showOriginalButton = false
