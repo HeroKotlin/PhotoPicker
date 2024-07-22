@@ -213,9 +213,11 @@ class PhotoPickerActivity: AppCompatActivity() {
             selectedList.sortBy { it.index }
         }
 
+        val context = this.applicationContext
+
         callback.onSubmit(
             this,
-            selectedList.map { PickedAsset.build(it, configuration, bottomBar.isOriginalChecked) }
+            selectedList.map { PickedAsset.build(context, it, configuration, bottomBar.isOriginalChecked) }
         )
 
     }
