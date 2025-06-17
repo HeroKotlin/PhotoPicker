@@ -4,10 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import com.github.herokotlin.photopicker.R
-import kotlinx.android.synthetic.main.photo_picker_title_button.view.*
+import com.github.herokotlin.photopicker.databinding.PhotoPickerTitleButtonBinding
 
 internal class TitleButton: LinearLayout {
+
+    lateinit var binding: PhotoPickerTitleButtonBinding
 
     var title = ""
 
@@ -19,7 +20,7 @@ internal class TitleButton: LinearLayout {
 
             field = value
 
-            titleView.text = value
+            binding.titleView.text = value
 
         }
 
@@ -36,7 +37,7 @@ internal class TitleButton: LinearLayout {
     }
 
     private fun init() {
-        LayoutInflater.from(context).inflate(R.layout.photo_picker_title_button, this)
+        binding = PhotoPickerTitleButtonBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
 }

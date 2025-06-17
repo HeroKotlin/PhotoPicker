@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.R
-import kotlinx.android.synthetic.main.photo_picker_bottom_bar.view.*
+import com.github.herokotlin.photopicker.databinding.PhotoPickerBottomBarBinding
 
 internal class BottomBar: RelativeLayout {
 
+    lateinit var binding: PhotoPickerBottomBarBinding
     lateinit var configuration: PhotoPickerConfiguration
 
     var isOriginalChecked = false
@@ -22,7 +23,7 @@ internal class BottomBar: RelativeLayout {
 
             field = value
 
-            originalButton.image = if (value) {
+            binding.originalButton.image = if (value) {
                 R.drawable.photo_picker_original_button_checked
             }
             else {
@@ -43,18 +44,18 @@ internal class BottomBar: RelativeLayout {
 
             var title = submitButtonTitle
             if (value > 0) {
-                submitButton.isEnabled = true
-                submitButton.alpha = 1f
+                binding.submitButton.isEnabled = true
+                binding.submitButton.alpha = 1f
                 if (configuration.maxSelectCount > 1) {
                     title = "$submitButtonTitle($value/${configuration.maxSelectCount})"
                 }
             }
             else {
-                submitButton.isEnabled = false
-                submitButton.alpha = 0.5f
+                binding.submitButton.isEnabled = false
+                binding.submitButton.alpha = 0.5f
             }
 
-            submitButton.text = title
+            binding.submitButton.text = title
         }
 
     private val submitButtonTitle: String by lazy {
@@ -80,9 +81,9 @@ internal class BottomBar: RelativeLayout {
 
     private fun init() {
 
-        LayoutInflater.from(context).inflate(R.layout.photo_picker_bottom_bar, this)
+        binding = PhotoPickerBottomBarBinding.inflate(LayoutInflater.from(context), this, true)
 
-        originalButton.setOnClickListener {
+        binding.originalButton.setOnClickListener {
             isOriginalChecked = !isOriginalChecked
         }
 

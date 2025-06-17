@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import com.github.herokotlin.photopicker.R
-import kotlinx.android.synthetic.main.photo_picker_select_button.view.*
+import com.github.herokotlin.photopicker.databinding.PhotoPickerSelectButtonBinding
 
 internal class SelectButton: RelativeLayout {
+
+    lateinit var binding: PhotoPickerSelectButtonBinding
 
     var countable = false
 
@@ -22,7 +24,7 @@ internal class SelectButton: RelativeLayout {
 
             field = value
 
-            imageView.setImageResource(
+            binding.imageView.setImageResource(
                 if (value) {
                     if (countable) {
                         R.drawable.photo_picker_select_button_checked_countable
@@ -48,13 +50,13 @@ internal class SelectButton: RelativeLayout {
 
             if (value > 0) {
                 if (field <= 0) {
-                    titleView.visibility = View.VISIBLE
+                    binding.titleView.visibility = View.VISIBLE
                 }
-                titleView.text = "$value"
+                binding.titleView.text = "$value"
             }
             else {
                 if (field > 0) {
-                    titleView.visibility = View.GONE
+                    binding.titleView.visibility = View.GONE
                 }
             }
 
@@ -75,7 +77,7 @@ internal class SelectButton: RelativeLayout {
     }
 
     private fun init() {
-        LayoutInflater.from(context).inflate(R.layout.photo_picker_select_button, this)
+        binding = PhotoPickerSelectButtonBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
 }

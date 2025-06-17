@@ -4,17 +4,17 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.R
+import com.github.herokotlin.photopicker.databinding.PhotoPickerAssetItemBinding
 import com.github.herokotlin.photopicker.enum.AssetType
 import com.github.herokotlin.photopicker.model.Asset
-import kotlinx.android.synthetic.main.photo_picker_asset_item.view.*
 
-class AssetItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((Asset) -> Unit), private val onToggleChecked: ((Asset) -> Unit)): RecyclerView.ViewHolder(view) {
+class AssetItem(binding: PhotoPickerAssetItemBinding, private val configuration: PhotoPickerConfiguration, private val onClick: ((Asset) -> Unit), private val onToggleChecked: ((Asset) -> Unit)): RecyclerView.ViewHolder(binding.root) {
 
-    private val thumbnailView = view.thumbnailView
+    private val thumbnailView = binding.thumbnailView
 
-    private val badgeView = view.badgeView
+    private val badgeView = binding.badgeView
 
-    private val selectButton = view.selectButton
+    private val selectButton = binding.selectButton
 
     private var pixelSize = 0
 
@@ -49,7 +49,7 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
                 }
 
                 configuration.loadAsset(
-                    itemView.thumbnailView,
+                    thumbnailView,
                     it.path,
                     R.drawable.photo_picker_asset_thumbnail_loading_placeholder,
                     R.drawable.photo_picker_asset_thumbnail_error_placeholder
@@ -88,7 +88,7 @@ class AssetItem(view: View, private val configuration: PhotoPickerConfiguration,
             }
         }
 
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             asset?.let {
                 onClick.invoke(it)
             }

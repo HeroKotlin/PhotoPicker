@@ -5,24 +5,24 @@ import android.view.View
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 import com.github.herokotlin.photopicker.model.Album
 import com.github.herokotlin.photopicker.R
-import kotlinx.android.synthetic.main.photo_picker_album_item.view.*
+import com.github.herokotlin.photopicker.databinding.PhotoPickerAlbumItemBinding
 
-class AlbumItem(view: View, private val configuration: PhotoPickerConfiguration, private val onClick: ((Album) -> Unit)): RecyclerView.ViewHolder(view) {
+class AlbumItem(binding: PhotoPickerAlbumItemBinding, private val configuration: PhotoPickerConfiguration, private val onClick: ((Album) -> Unit)): RecyclerView.ViewHolder(binding.root) {
 
-    private val separatorView = view.separatorView
+    private val separatorView = binding.separatorView
 
-    private val posterView = view.posterView
+    private val posterView = binding.posterView
 
-    private val titleView = view.titleView
+    private val titleView = binding.titleView
 
-    private val countView = view.countView
+    private val countView = binding.countView
 
     private var index = -1
 
     private lateinit var album: Album
 
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             onClick.invoke(album)
         }
     }

@@ -17,7 +17,7 @@ object PhotoPickerManager {
     private val allAlbums = HashMap<String, MutableList<Asset>>()
 
     private val handler = object: Handler(Looper.getMainLooper()) {
-        override fun handleMessage(msg: Message?) {
+        override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             onScanComplete.invoke()
         }
@@ -29,7 +29,7 @@ object PhotoPickerManager {
 
         onScanComplete = callback
 
-        Thread(Runnable {
+        Thread({
 
             // 降低线程优先级
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
@@ -61,14 +61,34 @@ object PhotoPickerManager {
 
                 while (it.moveToNext()) {
 
-                    val photo = Asset.build(
-                        it.getString(it.getColumnIndex(PhotoPickerConstant.FIELD_PATH)),
-                        it.getInt(it.getColumnIndex(PhotoPickerConstant.FIELD_WIDTH)),
-                        it.getInt(it.getColumnIndex(PhotoPickerConstant.FIELD_HEIGHT)),
-                        it.getInt(it.getColumnIndex(PhotoPickerConstant.FIELD_SIZE)),
-                        it.getString(it.getColumnIndex(PhotoPickerConstant.FIELD_MIME_TYPE))
-                    )
+                    var path = ""
+                    var width = 0
+                    var height = 0
+                    var size = 0
+                    var mimeType = ""
 
+                    val pathIndex = it.getColumnIndex(PhotoPickerConstant.FIELD_PATH)
+                    val widthIndex = it.getColumnIndex(PhotoPickerConstant.FIELD_WIDTH)
+                    val heightIndex = it.getColumnIndex(PhotoPickerConstant.FIELD_HEIGHT)
+                    val sizeIndex = it.getColumnIndex(PhotoPickerConstant.FIELD_SIZE)
+                    val mimeTypeIndex = it.getColumnIndex(PhotoPickerConstant.FIELD_MIME_TYPE)
+
+                    if (pathIndex >= 0 ) {
+                        path = it.getString(pathIndex)
+                    }
+                    if (widthIndex >= 0 ) {
+                        width = it.getInt(widthIndex)
+                    }
+                    if (heightIndex >= 0 ) {
+                        height = it.getInt(heightIndex)
+                    }
+                    if (sizeIndex >= 0 ) {
+                        size = it.getInt(sizeIndex)
+                    }
+                    if (mimeTypeIndex >= 0 ) {
+                        mimeType = it.getString(mimeTypeIndex)
+                    }
+                    val photo = Asset.build(path, width, height, size, mimeType)
                     if (photo == null || !configuration.filter(photo)) {
                         continue
                     }

@@ -12,8 +12,9 @@ import android.widget.FrameLayout
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 
 import com.github.herokotlin.photopicker.R
+import com.github.herokotlin.photopicker.databinding.PhotoPickerAssetGridBinding
+import com.github.herokotlin.photopicker.databinding.PhotoPickerAssetItemBinding
 import com.github.herokotlin.photopicker.model.Asset
-import kotlinx.android.synthetic.main.photo_picker_asset_grid.view.*
 
 class AssetGrid: FrameLayout {
 
@@ -29,9 +30,9 @@ class AssetGrid: FrameLayout {
                 return
             }
 
-            if (value.isNotEmpty() && spinnerView.visibility == View.VISIBLE) {
-                spinnerView.visibility = View.GONE
-                gridView.visibility = View.VISIBLE
+            if (value.isNotEmpty() && binding.spinnerView.visibility == View.VISIBLE) {
+                binding.spinnerView.visibility = View.GONE
+                binding.gridView.visibility = View.VISIBLE
             }
 
             field = value
@@ -52,6 +53,7 @@ class AssetGrid: FrameLayout {
         }
 
     var selectedAssetList = mutableListOf<Asset>()
+    lateinit var binding: PhotoPickerAssetGridBinding
 
     private lateinit var configuration: PhotoPickerConfiguration
 
@@ -93,6 +95,7 @@ class AssetGrid: FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.photo_picker_asset_grid, this)
     }
 
+
     fun init(configuration: PhotoPickerConfiguration) {
 
         this.configuration = configuration
@@ -101,11 +104,12 @@ class AssetGrid: FrameLayout {
 
         adapter = PhotoGridAdapter()
 
-        gridView.layoutManager = GridLayoutManager(context, configuration.assetGirdSpanCount)
+        binding = PhotoPickerAssetGridBinding.inflate(LayoutInflater.from(context), this, true)
+        binding.gridView.layoutManager = GridLayoutManager(context, configuration.assetGirdSpanCount)
 
-        gridView.adapter = adapter
+        binding.gridView.adapter = adapter
 
-        gridView.addItemDecoration(PhotoGridDecoration())
+        binding.gridView.addItemDecoration(PhotoGridDecoration())
 
     }
 
@@ -251,9 +255,11 @@ class AssetGrid: FrameLayout {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AssetItem {
-            val view = LayoutInflater.from(context).inflate(R.layout.photo_picker_asset_item, null)
+
+            val binding = PhotoPickerAssetItemBinding.inflate(LayoutInflater.from(context), parent, false)
+
             return AssetItem(
-                view,
+                binding,
                 configuration,
                 {
                     onAssetClick?.invoke(it)

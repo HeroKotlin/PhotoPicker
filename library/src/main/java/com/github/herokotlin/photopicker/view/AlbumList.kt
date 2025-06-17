@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
 
-import com.github.herokotlin.photopicker.R
+import com.github.herokotlin.photopicker.databinding.PhotoPickerAlbumItemBinding
+import com.github.herokotlin.photopicker.databinding.PhotoPickerAlbumListBinding
 import com.github.herokotlin.photopicker.model.Album
-import kotlinx.android.synthetic.main.photo_picker_album_list.view.*
 
 class AlbumList : FrameLayout {
+
+    lateinit var binding: PhotoPickerAlbumListBinding
 
     var onAlbumClick: ((Album) -> Unit)? = null
 
@@ -49,9 +51,9 @@ class AlbumList : FrameLayout {
 
     private fun init() {
 
-        LayoutInflater.from(context).inflate(R.layout.photo_picker_album_list, this)
+        binding = PhotoPickerAlbumListBinding.inflate(LayoutInflater.from(context), this, true)
 
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
 
     }
 
@@ -61,11 +63,13 @@ class AlbumList : FrameLayout {
 
         adapter = AlbumListAdapter()
 
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
     }
 
     inner class AlbumListAdapter: RecyclerView.Adapter<AlbumItem>() {
+
+        lateinit var binding: PhotoPickerAlbumItemBinding
 
         override fun getItemCount(): Int {
             return albumList.size
@@ -76,8 +80,8 @@ class AlbumList : FrameLayout {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumItem {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.photo_picker_album_item, parent, false)
-            return AlbumItem(view, configuration) {
+            binding = PhotoPickerAlbumItemBinding.inflate(LayoutInflater.from(context), parent, false)
+            return AlbumItem(binding, configuration) {
                 onAlbumClick?.invoke(it)
             }
         }
