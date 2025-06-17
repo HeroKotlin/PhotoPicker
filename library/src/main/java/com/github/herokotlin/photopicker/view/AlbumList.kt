@@ -69,8 +69,6 @@ class AlbumList : FrameLayout {
 
     inner class AlbumListAdapter: RecyclerView.Adapter<AlbumItem>() {
 
-        lateinit var binding: PhotoPickerAlbumItemBinding
-
         override fun getItemCount(): Int {
             return albumList.size
         }
@@ -80,7 +78,7 @@ class AlbumList : FrameLayout {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumItem {
-            binding = PhotoPickerAlbumItemBinding.inflate(LayoutInflater.from(context), parent, false)
+            val binding = PhotoPickerAlbumItemBinding.inflate(LayoutInflater.from(context), parent, false)
             return AlbumItem(binding, configuration) {
                 onAlbumClick?.invoke(it)
             }
