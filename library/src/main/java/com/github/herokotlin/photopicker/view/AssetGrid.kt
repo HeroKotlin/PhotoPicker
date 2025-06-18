@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.github.herokotlin.photopicker.PhotoPickerConfiguration
-
 import com.github.herokotlin.photopicker.R
 import com.github.herokotlin.photopicker.databinding.PhotoPickerAssetGridBinding
 import com.github.herokotlin.photopicker.databinding.PhotoPickerAssetItemBinding
 import com.github.herokotlin.photopicker.model.Asset
+import androidx.core.view.isVisible
 
 class AssetGrid: FrameLayout {
 
@@ -30,7 +30,7 @@ class AssetGrid: FrameLayout {
                 return
             }
 
-            if (value.isNotEmpty() && binding.spinnerView.visibility == View.VISIBLE) {
+            if (value.isNotEmpty() && binding.spinnerView.isVisible) {
                 binding.spinnerView.visibility = View.GONE
                 binding.gridView.visibility = View.VISIBLE
             }
