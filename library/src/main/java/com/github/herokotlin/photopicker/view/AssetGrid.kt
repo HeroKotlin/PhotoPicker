@@ -92,7 +92,7 @@ class AssetGrid: FrameLayout {
     }
 
     private fun init() {
-        LayoutInflater.from(context).inflate(R.layout.photo_picker_asset_grid, this)
+        binding = PhotoPickerAssetGridBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
 
@@ -104,7 +104,6 @@ class AssetGrid: FrameLayout {
 
         adapter = PhotoGridAdapter()
 
-        binding = PhotoPickerAssetGridBinding.inflate(LayoutInflater.from(context), this, true)
         binding.gridView.layoutManager = GridLayoutManager(context, configuration.assetGirdSpanCount)
 
         binding.gridView.adapter = adapter
